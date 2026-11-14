@@ -79,7 +79,7 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 **Scope:** M | Model: Sonnet
 
 ## Task S2: See my upcoming runs
-**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus (fixed a compile error in SessionBuilder and a Substring type mismatch in a test). 7 new SessionBuilder tests. Not compiled yet: waiting for `swift test` and the iPhone run.
+**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus (fixed a compile error in SessionBuilder and a Substring type mismatch in a test). 7 new SessionBuilder tests. First iPhone run (owner): tests pass, calendar access and sessions work. Fixes after that run: minutes shown as "06.0" (now two digits), calendar drop-down replaced by a sheet grouped by account with colour dot, tick and search, chips no longer wrap. Waiting for the re-test.
 **Acceptance criteria:**
 - [ ] Calendar permission flow incl. denied state
 - [ ] Calendar picker defaults to "Stefan's' Training" if present

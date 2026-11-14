@@ -71,10 +71,7 @@ struct NextSessionCard: View {
     }
 
     private func cardChip(_ text: String, _ symbol: String) -> some View {
-        Label(text, systemImage: symbol)
-            .font(.footnote.weight(.semibold))
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
+        ChipContent(text: text, symbol: symbol)
             .background(.white.opacity(0.18), in: Capsule())
     }
 }

@@ -2,10 +2,14 @@ import Foundation
 import Observation
 import RunPrepCore
 import SwiftData
+import SwiftUI
 
 struct CalendarOption: Identifiable, Equatable, Sendable {
     let id: String
     let title: String
+    /// The account the calendar belongs to (iCloud, a Google address, ...).
+    let account: String
+    let color: Color
 }
 
 enum UpcomingState: Equatable {
@@ -63,7 +67,12 @@ final class UpcomingViewModel {
         }
         let settings = fetchOrCreateSettings(in: context)
         calendarOptions = service.calendars().map {
-            CalendarOption(id: $0.calendarIdentifier, title: $0.title)
+            CalendarOption(
+                id: $0.calendarIdentifier,
+                title: $0.title,
+                account: $0.source?.title ?? "Other",
+                color: Color(cgColor: $0.cgColor)
+            )
         }
         guard let picked = pickCalendar(stored: settings.calendarId) else {
             selectedCalendarId = nil

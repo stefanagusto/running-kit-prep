@@ -37,7 +37,7 @@ extension Session {
     var placeIsMissing: Bool { type != .race && place == nil }
 
     var timeText: String {
-        start.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute())
+        start.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits))
     }
 
     var longDateText: String {
@@ -55,12 +55,26 @@ struct Chip: View {
     var warn = false
 
     var body: some View {
-        Label(text, systemImage: symbol)
-            .font(.footnote.weight(.semibold))
+        ChipContent(text: text, symbol: symbol)
             .foregroundStyle(warn ? Color("Warn") : Color.accentColor)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
             .background(warn ? Color("WarnSoft") : Color("AccentSoft"), in: Capsule())
+    }
+}
+
+/// Icon and text kept tight on one line; shared by row chips and card chips.
+struct ChipContent: View {
+    let text: String
+    let symbol: String
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(systemName: symbol).imageScale(.small)
+            Text(text).lineLimit(1)
+        }
+        .font(.footnote.weight(.semibold))
+        .fixedSize()
+        .padding(.horizontal, 10)
+        .padding(.vertical, 5)
     }
 }
 
@@ -83,9 +97,9 @@ struct SessionRow: View {
                 Text(session.longDateText)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                HStack(spacing: 6) {
-                    Chip(text: session.type.label, symbol: session.type.symbol)
-                    Chip(text: session.placeText, symbol: session.placeSymbol, warn: session.placeIsMissing)
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 6) { chips }
+                    VStack(alignment: .leading, spacing: 6) { chips }
                 }
             }
         }
@@ -93,5 +107,11 @@ struct SessionRow: View {
         .frame(minHeight: 44, alignment: .topLeading)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(session.accessibilityText)
+    }
+
+    @ViewBuilder
+    private var chips: some View {
+        Chip(text: session.type.label, symbol: session.type.symbol)
+        Chip(text: session.placeText, symbol: session.placeSymbol, warn: session.placeIsMissing)
     }
 }

@@ -8,6 +8,7 @@ struct UpcomingView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.openURL) private var openURL
+    @State private var showCalendarPicker = false
 
     var body: some View {
         NavigationStack {
@@ -19,23 +20,19 @@ struct UpcomingView: View {
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { viewModel.load() }
         }
+        .sheet(isPresented: $showCalendarPicker) {
+            CalendarPickerSheet(
+                options: viewModel.calendarOptions,
+                selectedId: viewModel.selectedCalendarId
+            ) { viewModel.choose(calendarId: $0) }
+        }
     }
 
     @ToolbarContentBuilder
     private var toolbarItems: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            Menu {
-                ForEach(viewModel.calendarOptions) { option in
-                    Button {
-                        viewModel.choose(calendarId: option.id)
-                    } label: {
-                        if option.id == viewModel.selectedCalendarId {
-                            Label(option.title, systemImage: "checkmark")
-                        } else {
-                            Text(option.title)
-                        }
-                    }
-                }
+            Button {
+                showCalendarPicker = true
             } label: {
                 Label("Choose calendar", systemImage: "calendar")
             }
@@ -94,18 +91,12 @@ struct UpcomingView: View {
     }
 
     private func calendarPicker(_ options: [CalendarOption]) -> some View {
-        List {
-            Section {
-                ForEach(options) { option in
-                    Button(option.title) { viewModel.choose(calendarId: option.id) }
-                        .frame(minHeight: 44, alignment: .leading)
-                }
-            } header: {
-                Text("Choose your training calendar")
-            } footer: {
-                Text("Run Prep could not find a calendar with \"training\" in its name.")
-            }
-        }
+        CalendarPickerList(
+            options: options,
+            selectedId: nil,
+            onChoose: { viewModel.choose(calendarId: $0) },
+            footer: "Run Prep could not find a calendar with \"training\" in its name. Choose the one that holds your runs."
+        )
     }
 
     private func sessionList(_ sessions: [Session]) -> some View {
