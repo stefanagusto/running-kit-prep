@@ -1,6 +1,6 @@
 # Running Prep App - status
 
-Last updated: 14 Nov 2026. Status: **S0 done 14 Nov 2026 (free Apple ID can do everything except Time Sensitive). S1 code written; waiting for `swift test` and the build on the Mac.**
+Last updated: 14 Nov 2026. Status: **S0 done 14 Nov 2026 (free Apple ID can do everything except Time Sensitive). S1 done 14 Nov (tests pass, app runs on the iPhone). Next: S2, the Upcoming screen from the real calendar.**
 
 This file is the progress hub. Details live in:
 
@@ -27,8 +27,8 @@ This file is the progress hub. Details live in:
 | 7 | D4 Screens + ecosystem surfaces | done 14 Nov (Opus, pen.dev) |
 | 8 | Checkpoint 0: my review of PRD, TDD, design | approved 14 Nov |
 | 9 | Phase 1: S0 free-team signing spike | done 14 Nov: all pass except Time Sensitive |
-| 9b | Phase 1: S1 skeleton + core | code written 14 Nov, **waiting for Mac test run** |
-| 9c | Phase 1: S2 Upcoming | not started |
+| 9b | Phase 1: S1 skeleton + core | done 14 Nov: tests pass, app runs on iPhone |
+| 9c | Phase 1: S2 Upcoming | code written 14 Nov, **waiting for Mac test run** |
 | 10 | Phase 2: reminders, place, checklist, Siri intents | not started |
 | 11 | Phase 3: items, settings, nightly refresh | not started |
 | 12 | Phase 4 (P2): Live Activity, widgets, Control Center control | not started |

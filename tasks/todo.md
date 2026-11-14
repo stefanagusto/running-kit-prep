@@ -68,7 +68,7 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 **Status 14 Nov 2026: DONE.** Ran on iPhone 17 with the free Personal Team. Pass: widget extension, App Group (app + widget), Live Activity, Dynamic Island, notifications. Fail: Time Sensitive (not supported on personal teams). Decision: P2 goes ahead without the paid program; no Time Sensitive entitlement. Details in `spike/RESULTS.md`.
 
 ## Task S1: Project skeleton + core seed
-**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus, seed checked against PRD by Haiku (0 mismatches). 25 XCTest cases. Not compiled yet: waiting for `swift test` and the app build on the Mac.
+**Status 14 Nov 2026: DONE.** Code written (Sonnet), reviewed by Opus, seed checked against PRD by Haiku (0 mismatches). On the Mac (owner report): `swift test` passed with no errors, app built with no errors and ran on the iPhone showing the long-run-at-UI kit (Charge 2, Pack 4, Bring 6).
 **Acceptance criteria:**
 - [ ] `xcodegen generate` produces a project that builds an empty app
 - [ ] Seed items match the PRD table row by row
@@ -79,6 +79,7 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 **Scope:** M | Model: Sonnet
 
 ## Task S2: See my upcoming runs
+**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus (fixed a compile error in SessionBuilder and a Substring type mismatch in a test). 7 new SessionBuilder tests. Not compiled yet: waiting for `swift test` and the iPhone run.
 **Acceptance criteria:**
 - [ ] Calendar permission flow incl. denied state
 - [ ] Calendar picker defaults to "Stefan's' Training" if present

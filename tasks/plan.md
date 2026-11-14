@@ -43,7 +43,7 @@ TDD + Screens
 
 ### Phase 1: Foundation
 - [x] S0 (done 14 Nov 2026: all pass except Time Sensitive; P2 confirmed without the paid program). Free-team signing spike: empty app + widget extension + App Group + Time Sensitive, signed with my personal team on the Mac. Result decides whether P2 is possible without the paid program.
-- [ ] S1. Project skeleton + core seed: repo, `project.yml`, `RunPrepCore` with models, seed items, title classifier, kit builder + tests
+- [x] S1 (done 14 Nov 2026). Project skeleton + core seed: repo, `project.yml`, `RunPrepCore` with models, seed items, title classifier, kit builder + tests
 - [ ] S2. See my upcoming runs: calendar permission, pick calendar, Upcoming screen lists classified sessions (14 days)
 
 ### Checkpoint 1 (Mac)
