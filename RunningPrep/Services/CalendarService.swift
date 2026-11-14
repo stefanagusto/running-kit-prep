@@ -46,7 +46,8 @@ final class CalendarService {
                 id: id,
                 title: event.title ?? "",
                 start: event.startDate,
-                calendarTitle: event.calendar?.title ?? ""
+                calendarTitle: event.calendar?.title ?? "",
+                location: event.location
             )
         }
     }

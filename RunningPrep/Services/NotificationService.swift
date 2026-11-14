@@ -30,10 +30,20 @@ final class NotificationService {
         }
     }
 
-    /// Categories have no actions yet; the place actions arrive with S4.
+    /// Place actions only on the H-24 and H-12 ask categories. Options are empty, so a press does not open the app.
     func registerCategories() {
-        let categories = ReminderCategory.allCases.map {
-            UNNotificationCategory(identifier: $0.rawValue, actions: [], intentIdentifiers: [], options: [])
+        let placeActions = [
+            UNNotificationAction(identifier: PlaceAction.ui, title: "Start at UI campus", options: []),
+            UNNotificationAction(identifier: PlaceAction.home, title: "Start at home", options: [])
+        ]
+        let categories = ReminderCategory.allCases.map { category in
+            let hasPlaceActions = category == .h24 || category == .h12Ask
+            return UNNotificationCategory(
+                identifier: category.rawValue,
+                actions: hasPlaceActions ? placeActions : [],
+                intentIdentifiers: [],
+                options: []
+            )
         }
         center.setNotificationCategories(Set(categories))
     }

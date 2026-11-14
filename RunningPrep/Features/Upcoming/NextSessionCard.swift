@@ -4,15 +4,13 @@ import SwiftUI
 struct NextSessionCard: View {
     let session: Session
     let slots: [ReminderSlot]
+    let onPlace: (Place) -> Void
+    var now = Date()
 
     private static let lightText = Color(red: 0xE3 / 255, green: 0xE8 / 255, blue: 0xFF / 255)
 
-    private var dayWord: String {
-        let calendar = Calendar.current
-        if calendar.isDateInToday(session.start) { return "Today" }
-        if calendar.isDateInTomorrow(session.start) { return "Tomorrow" }
-        return session.start.formatted(.dateTime.weekday(.wide))
-    }
+    private var countdown: CountdownLabel { .forSession(session, now: now) }
+    private var weekday: String { session.start.formatted(.dateTime.weekday(.wide)) }
 
     private var metaText: String {
         let date = session.start.formatted(.dateTime.day().month(.wide))
@@ -22,7 +20,10 @@ struct NextSessionCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             summary
-            ReminderTimeline(slots: slots)
+            if session.type != .race {
+                PlacePrompt(session: session, select: onPlace)
+            }
+            ReminderTimeline(slots: slots, now: now)
         }
         .foregroundStyle(.white)
         .padding(20)
@@ -43,9 +44,7 @@ struct NextSessionCard: View {
 
     private var summary: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Next \u{00B7} \(dayWord)")
-                .font(.footnote.weight(.semibold))
-                .foregroundStyle(Self.lightText)
+            CountdownKicker(label: countdown, weekday: weekday)
             Text(session.timeText)
                 .font(.system(size: 56, weight: .bold))
                 .monospacedDigit()
@@ -56,10 +55,12 @@ struct NextSessionCard: View {
             Text(metaText)
                 .font(.subheadline)
                 .foregroundStyle(Self.lightText)
-            chips
+            ChipContent(text: session.type.label, symbol: session.type.symbol)
+                .background(.white.opacity(0.18), in: Capsule())
+                .padding(.top, 4)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Next session. \(dayWord). \(session.accessibilityText)")
+        .accessibilityLabel("Next session. \(countdown.text), \(weekday). \(session.accessibilityText)")
     }
 
     private var lanes: some View {
@@ -70,20 +71,5 @@ struct NextSessionCard: View {
         }
         .padding(.vertical, 4)
         .accessibilityHidden(true)
-    }
-
-    private var chips: some View {
-        HStack(spacing: 6) {
-            cardChip(session.type.label, session.type.symbol)
-            if session.type != .race {
-                cardChip(session.placeText, session.placeSymbol)
-            }
-        }
-        .padding(.top, 4)
-    }
-
-    private func cardChip(_ text: String, _ symbol: String) -> some View {
-        ChipContent(text: text, symbol: symbol)
-            .background(.white.opacity(0.18), in: Capsule())
     }
 }

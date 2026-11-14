@@ -8,7 +8,8 @@ public enum SessionBuilder {
         rules: KeywordRules = .default,
         now: Date,
         windowDays: Int = 14,
-        places: [String: Place] = [:]
+        places: [String: Place] = [:],
+        placeRules: PlaceRules = .default
     ) -> [Session] {
         let end = now.addingTimeInterval(TimeInterval(windowDays) * 86_400)
         var result: [Session] = []
@@ -17,14 +18,26 @@ public enum SessionBuilder {
             guard let type = TitleClassifier.classify(title: event.title, rules: rules) else { continue }
             let sessionKey = Self.key(id: event.id, start: event.start)
             guard seen.insert(sessionKey).inserted else { continue }
-            let place: Place? = type == .race ? nil : places[sessionKey]
+            var place: Place?
+            var source: PlaceSource?
+            if type != .race {
+                if let chosen = places[sessionKey] {
+                    place = chosen
+                    source = .chosen
+                } else if let fromCalendar = PlaceResolver.place(location: event.location, rules: placeRules) {
+                    place = fromCalendar
+                    source = .calendar
+                }
+            }
             result.append(Session(
                 key: sessionKey,
                 title: event.title,
                 type: type,
                 start: event.start,
                 place: place,
-                calendarTitle: event.calendarTitle
+                calendarTitle: event.calendarTitle,
+                placeSource: source,
+                location: event.location
             ))
         }
         return result.sorted { $0.start < $1.start }

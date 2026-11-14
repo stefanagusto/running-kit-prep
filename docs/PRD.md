@@ -100,6 +100,7 @@ As a runner, I want to say where I start, so that kunci motor and STNK only show
 - Given a non-race session, when I tap "Start at UI" or "Start at home" on a notification or in the app, then the place is saved for that session.
 - Given the place changes, then all reminders are rebuilt.
 - Given the session is a race, then the place is never asked.
+- Given the calendar event has a location such as "Universitas Indonesia" (or "Depok", "UI"), then the place is UI campus without asking; "Home" or "Rumah" gives Home. My own choice for that session always wins over the location. (Added 14 Nov 2026: the owner already puts the run location in each event.)
 
 ### US-07 Tick my checklist
 As a runner, I want a checklist I tick myself, so that I know I have everything.

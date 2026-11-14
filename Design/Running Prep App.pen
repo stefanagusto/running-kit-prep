@@ -1894,6 +1894,71 @@
                           "gap": 8,
                           "children": [
                             {
+                              "type": "frame",
+                              "id": "C90coR",
+                              "name": "When Row",
+                              "width": "fill_container",
+                              "gap": 6,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "LXHrZ",
+                                  "x": 0,
+                                  "y": 0,
+                                  "name": "Countdown Pill",
+                                  "enabled": false,
+                                  "fill": "$accent-soft",
+                                  "cornerRadius": 6,
+                                  "padding": [
+                                    2,
+                                    8
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "l6ipY",
+                                      "name": "Countdown Pill Text",
+                                      "fill": "$accent-text",
+                                      "content": "Tomorrow",
+                                      "fontFamily": "$font-body",
+                                      "fontSize": 14,
+                                      "fontWeight": "700"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "JPN9P",
+                                  "name": "Countdown",
+                                  "fill": "$ink-2",
+                                  "content": "In 4 days",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 15,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "m9w2Ov",
+                                  "name": "Dot",
+                                  "fill": "$muted",
+                                  "content": "·",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 13,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "m3BzUa",
+                                  "name": "Meta",
+                                  "fill": "$muted",
+                                  "content": "21 Nov · reminders 05:00, 17:00, 04:30",
+                                  "fontFamily": "$font-body",
+                                  "fontSize": 13
+                                }
+                              ]
+                            },
+                            {
                               "type": "text",
                               "id": "COTOR",
                               "name": "Title",
@@ -1904,15 +1969,6 @@
                               "fontFamily": "$font-body",
                               "fontSize": 17,
                               "fontWeight": "600"
-                            },
-                            {
-                              "type": "text",
-                              "id": "m3BzUa",
-                              "name": "Meta",
-                              "fill": "$muted",
-                              "content": "21 Nov · reminders 05:00, 17:00, 04:30",
-                              "fontFamily": "$font-body",
-                              "fontSize": 13
                             },
                             {
                               "type": "frame",
@@ -1943,7 +1999,18 @@
                                   "id": "OVoxe",
                                   "type": "ref",
                                   "ref": "RKRUU",
-                                  "name": "Place Chip"
+                                  "name": "Place Chip",
+                                  "fill": "$page",
+                                  "stroke": "$rule",
+                                  "strokeWidth": 1,
+                                  "descendants": {
+                                    "NaSzb": {
+                                      "fill": "$ink-2"
+                                    },
+                                    "YGZJH": {
+                                      "fill": "$ink-2"
+                                    }
+                                  }
                                 }
                               ]
                             }
@@ -3132,9 +3199,53 @@
                   "alignItems": "center",
                   "children": [
                     {
+                      "type": "frame",
+                      "id": "GpL5g",
+                      "name": "Countdown Kicker",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "AN7Vm",
+                          "name": "Hero Countdown",
+                          "fill": "#ffffff",
+                          "cornerRadius": 8,
+                          "padding": [
+                            4,
+                            10
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "n3QgQ",
+                              "name": "Hero Countdown Text",
+                              "fill": "#1f3fd6",
+                              "content": "Tomorrow",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "XjvhI",
+                          "name": "Hero Weekday",
+                          "fill": "#e3e8ff",
+                          "content": "Saturday",
+                          "fontFamily": "$font-body",
+                          "fontSize": 15
+                        }
+                      ]
+                    },
+                    {
                       "type": "text",
                       "id": "R6jfT2",
+                      "x": 0,
+                      "y": 0,
                       "name": "Kicker",
+                      "enabled": false,
                       "fill": "#e3e8ff",
                       "content": "Next · tomorrow",
                       "fontFamily": "$font-body",
@@ -3429,7 +3540,7 @@
                   "id": "r8xfkv",
                   "name": "Section Label",
                   "fill": "$muted",
-                  "content": "Next 14 days",
+                  "content": "Coming up",
                   "fontFamily": "$font-body",
                   "fontSize": 13,
                   "fontWeight": "600"
@@ -3450,11 +3561,19 @@
                     "yoWya": {
                       "content": "06:00"
                     },
-                    "COTOR": {
-                      "content": "Easy Run 6 km, Z2"
+                    "LXHrZ": {
+                      "enabled": false
+                    },
+                    "JPN9P": {
+                      "content": "In 3 days",
+                      "fill": "$accent-text",
+                      "fontWeight": "600"
                     },
                     "m3BzUa": {
-                      "content": "23 Nov"
+                      "content": "Monday, 23 November"
+                    },
+                    "COTOR": {
+                      "content": "Easy Run 6 km, Z2"
                     },
                     "c9R499/NaSzb": {
                       "icon": "footprints"
@@ -3486,11 +3605,19 @@
                     "yoWya": {
                       "content": "06:00"
                     },
-                    "COTOR": {
-                      "content": "Fartlek 7 km"
+                    "LXHrZ": {
+                      "enabled": false
+                    },
+                    "JPN9P": {
+                      "content": "In 5 days",
+                      "fill": "$muted",
+                      "fontWeight": "400"
                     },
                     "m3BzUa": {
-                      "content": "25 Nov"
+                      "content": "Wednesday, 25 November"
+                    },
+                    "COTOR": {
+                      "content": "Fartlek 7 km"
                     },
                     "c9R499/NaSzb": {
                       "icon": "footprints"
@@ -3522,11 +3649,19 @@
                     "yoWya": {
                       "content": "05:00"
                     },
-                    "COTOR": {
-                      "content": "Long Run 14 km"
+                    "LXHrZ": {
+                      "enabled": false
+                    },
+                    "JPN9P": {
+                      "content": "In 8 days",
+                      "fill": "$muted",
+                      "fontWeight": "400"
                     },
                     "m3BzUa": {
-                      "content": "28 Nov"
+                      "content": "Saturday, 28 November"
+                    },
+                    "COTOR": {
+                      "content": "Long Run 14 km"
                     },
                     "c9R499/NaSzb": {
                       "icon": "route"
@@ -3563,11 +3698,19 @@
                     "yoWya": {
                       "content": "05:00"
                     },
-                    "COTOR": {
-                      "content": "Race: Pertamina Eco RunFest HM"
+                    "LXHrZ": {
+                      "enabled": false
+                    },
+                    "JPN9P": {
+                      "content": "In 16 days",
+                      "fill": "$muted",
+                      "fontWeight": "400"
                     },
                     "m3BzUa": {
-                      "content": "6 Dec"
+                      "content": "Sunday, 6 December"
+                    },
+                    "COTOR": {
+                      "content": "Race: Pertamina Eco RunFest HM"
                     },
                     "c9R499/NaSzb": {
                       "icon": "medal"
@@ -9894,7 +10037,164 @@
     },
     {
       "type": "frame",
-      "id": "t1R2ll",
+      "id": "lhFH3",
+      "x": 5170,
+      "y": 2540,
+      "name": "14 Countdown tiers (spec)",
+      "theme": {
+        "mode": "light"
+      },
+      "width": 420,
+      "fill": "$page",
+      "layout": "vertical",
+      "gap": 16,
+      "padding": 24,
+      "children": [
+        {
+          "type": "text",
+          "id": "cl1On",
+          "name": "Title",
+          "fill": "$ink",
+          "content": "Countdown tiers",
+          "fontFamily": "$font-display",
+          "fontSize": 22,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "u0BiJx",
+          "name": "Rule",
+          "fill": "$ink-2",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "The countdown leads each row, above the title. Today or Tomorrow: accent pill. 2 to 3 days: accent semibold. 4 days or more: secondary regular. Place chips are neutral so only the countdown is blue. Next-run card: white pill, weekday in regular weight.",
+          "lineHeight": 1.45,
+          "fontFamily": "$font-body",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "KjMAz",
+          "name": "Rows",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 10,
+          "children": [
+            {
+              "id": "lWw5L",
+              "type": "ref",
+              "ref": "F2GAI",
+              "name": "Tier Tomorrow",
+              "width": "fill_container",
+              "descendants": {
+                "T1tBk": {
+                  "content": "Sat",
+                  "letterSpacing": 0,
+                  "fontSize": 13,
+                  "fontWeight": "600"
+                },
+                "yoWya": {
+                  "content": "05:00"
+                },
+                "LXHrZ": {
+                  "enabled": true
+                },
+                "JPN9P": {
+                  "content": "",
+                  "fill": "$accent-text",
+                  "enabled": false
+                },
+                "m9w2Ov": {
+                  "enabled": true
+                },
+                "m3BzUa": {
+                  "content": "Saturday, 21 November"
+                },
+                "COTOR": {
+                  "content": "Long Run 18 km"
+                }
+              }
+            },
+            {
+              "id": "Mu3X9",
+              "type": "ref",
+              "ref": "F2GAI",
+              "name": "Tier In 3 days",
+              "width": "fill_container",
+              "descendants": {
+                "T1tBk": {
+                  "content": "Mon",
+                  "letterSpacing": 0,
+                  "fontSize": 13,
+                  "fontWeight": "600"
+                },
+                "yoWya": {
+                  "content": "06:00"
+                },
+                "LXHrZ": {
+                  "enabled": false
+                },
+                "JPN9P": {
+                  "content": "In 3 days",
+                  "fill": "$accent-text",
+                  "enabled": true,
+                  "fontWeight": "600"
+                },
+                "m9w2Ov": {
+                  "enabled": true
+                },
+                "m3BzUa": {
+                  "content": "Monday, 23 November"
+                },
+                "COTOR": {
+                  "content": "Easy Run 6 km, Z2"
+                }
+              }
+            },
+            {
+              "id": "xsN0S",
+              "type": "ref",
+              "ref": "F2GAI",
+              "name": "Tier In 8 days",
+              "width": "fill_container",
+              "descendants": {
+                "T1tBk": {
+                  "content": "Sat",
+                  "letterSpacing": 0,
+                  "fontSize": 13,
+                  "fontWeight": "600"
+                },
+                "yoWya": {
+                  "content": "05:00"
+                },
+                "LXHrZ": {
+                  "enabled": false
+                },
+                "JPN9P": {
+                  "content": "In 8 days",
+                  "fill": "$muted",
+                  "enabled": true,
+                  "fontWeight": "400"
+                },
+                "m9w2Ov": {
+                  "enabled": true
+                },
+                "m3BzUa": {
+                  "content": "Saturday, 28 November"
+                },
+                "COTOR": {
+                  "content": "Long Run 14 km"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "YAljq",
       "x": 4230,
       "y": 2540,
       "name": "10 Upcoming Dark",
@@ -9908,14 +10208,14 @@
       "layout": "vertical",
       "children": [
         {
-          "id": "n2YFMA",
+          "id": "e5QXB",
           "type": "ref",
           "ref": "OIbdh",
           "name": "Status Bar"
         },
         {
           "type": "frame",
-          "id": "XtiLl",
+          "id": "tUDVr",
           "name": "Content",
           "width": "fill_container",
           "layout": "vertical",
@@ -9929,7 +10229,7 @@
           "children": [
             {
               "type": "frame",
-              "id": "LL7IB",
+              "id": "ur1l1",
               "name": "Title Row",
               "width": "fill_container",
               "justifyContent": "space_between",
@@ -9937,7 +10237,7 @@
               "children": [
                 {
                   "type": "text",
-                  "id": "P8l1AI",
+                  "id": "Je7Kn",
                   "name": "Title",
                   "fill": "$ink",
                   "content": "Upcoming",
@@ -9948,7 +10248,7 @@
                 },
                 {
                   "type": "frame",
-                  "id": "W45Opg",
+                  "id": "b5B1M",
                   "name": "Refresh",
                   "width": 44,
                   "height": 44,
@@ -9977,7 +10277,7 @@
                   "children": [
                     {
                       "type": "icon",
-                      "id": "f080E",
+                      "id": "YGBSW",
                       "name": "Icon",
                       "width": 18,
                       "height": 18,
@@ -9991,7 +10291,7 @@
             },
             {
               "type": "frame",
-              "id": "o0ExB",
+              "id": "I1TOO",
               "name": "Next Session",
               "width": "fill_container",
               "fill": [
@@ -10039,16 +10339,60 @@
               "children": [
                 {
                   "type": "frame",
-                  "id": "xmVRG",
+                  "id": "Xqp2m",
                   "name": "Kicker Row",
                   "width": "fill_container",
                   "justifyContent": "space_between",
                   "alignItems": "center",
                   "children": [
                     {
+                      "type": "frame",
+                      "id": "FNxJY",
+                      "name": "Countdown Kicker",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "AYBtC",
+                          "name": "Hero Countdown",
+                          "fill": "#ffffff",
+                          "cornerRadius": 8,
+                          "padding": [
+                            4,
+                            10
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "buQ9E",
+                              "name": "Hero Countdown Text",
+                              "fill": "#1f3fd6",
+                              "content": "Tomorrow",
+                              "fontFamily": "$font-body",
+                              "fontSize": 15,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "kfB1U",
+                          "name": "Hero Weekday",
+                          "fill": "#e3e8ff",
+                          "content": "Saturday",
+                          "fontFamily": "$font-body",
+                          "fontSize": 15
+                        }
+                      ]
+                    },
+                    {
                       "type": "text",
-                      "id": "ILwOR",
+                      "id": "uIcND",
+                      "x": 0,
+                      "y": 0,
                       "name": "Kicker",
+                      "enabled": false,
                       "fill": "#e3e8ff",
                       "content": "Next · tomorrow",
                       "fontFamily": "$font-body",
@@ -10056,7 +10400,7 @@
                       "fontWeight": "600"
                     },
                     {
-                      "id": "J0f6o",
+                      "id": "H4rTlX",
                       "type": "ref",
                       "ref": "RKRUU",
                       "name": "Warn Chip",
@@ -10077,7 +10421,7 @@
                 },
                 {
                   "type": "text",
-                  "id": "ZcS4E",
+                  "id": "nncay",
                   "name": "Timing Digits",
                   "fill": "#ffffff",
                   "content": "05:00",
@@ -10087,7 +10431,7 @@
                 },
                 {
                   "type": "frame",
-                  "id": "Q7Ujc1",
+                  "id": "Sektx",
                   "name": "Lane Lines",
                   "width": "fill_container",
                   "layout": "vertical",
@@ -10095,7 +10439,7 @@
                   "children": [
                     {
                       "type": "rectangle",
-                      "id": "asz61",
+                      "id": "E8T36G",
                       "name": "Lane",
                       "fill": "#ffffff33",
                       "width": "fill_container",
@@ -10103,7 +10447,7 @@
                     },
                     {
                       "type": "rectangle",
-                      "id": "PcwAp",
+                      "id": "MBFhC",
                       "name": "Lane",
                       "fill": "#ffffff33",
                       "width": "fill_container",
@@ -10111,7 +10455,7 @@
                     },
                     {
                       "type": "rectangle",
-                      "id": "DSr9r",
+                      "id": "nak8J",
                       "name": "Lane",
                       "fill": "#ffffff33",
                       "width": "fill_container",
@@ -10121,7 +10465,7 @@
                 },
                 {
                   "type": "frame",
-                  "id": "uSY5d",
+                  "id": "xdy1h",
                   "name": "Title Block",
                   "width": "fill_container",
                   "layout": "vertical",
@@ -10129,7 +10473,7 @@
                   "children": [
                     {
                       "type": "text",
-                      "id": "P2wnKd",
+                      "id": "V5sSu",
                       "name": "Session Title",
                       "fill": "#ffffff",
                       "content": "Long Run 18 km",
@@ -10139,7 +10483,7 @@
                     },
                     {
                       "type": "text",
-                      "id": "ajnFX",
+                      "id": "XXWHd",
                       "name": "Session Meta",
                       "fill": "#e3e8ff",
                       "content": "Sat 21 Nov · Stefan's' Training",
@@ -10150,7 +10494,7 @@
                 },
                 {
                   "type": "text",
-                  "id": "liLWp",
+                  "id": "CxoOj",
                   "name": "Prompt",
                   "fill": "#ffffff",
                   "content": "Where do you start?",
@@ -10159,7 +10503,7 @@
                   "fontWeight": "700"
                 },
                 {
-                  "id": "Q7LHJ",
+                  "id": "uXxbU",
                   "type": "ref",
                   "ref": "hZaVo",
                   "name": "Place Picker",
@@ -10197,7 +10541,7 @@
                 },
                 {
                   "type": "frame",
-                  "id": "LiB5H",
+                  "id": "h0yQn",
                   "name": "Reminder Timeline",
                   "width": "fill_container",
                   "layout": "vertical",
@@ -10211,7 +10555,7 @@
                   "children": [
                     {
                       "type": "frame",
-                      "id": "CwGQQ",
+                      "id": "xLtaS",
                       "name": "Reminder Charge + pack",
                       "width": "fill_container",
                       "gap": 10,
@@ -10219,7 +10563,7 @@
                       "children": [
                         {
                           "type": "icon",
-                          "id": "oRwkT",
+                          "id": "E9DOGG",
                           "name": "Icon",
                           "width": 16,
                           "height": 16,
@@ -10229,7 +10573,7 @@
                         },
                         {
                           "type": "text",
-                          "id": "ieeyH",
+                          "id": "a4FKn",
                           "name": "When",
                           "fill": "#ffffff",
                           "content": "Fri 05:00",
@@ -10239,7 +10583,7 @@
                         },
                         {
                           "type": "text",
-                          "id": "aMnkg",
+                          "id": "aDt6R",
                           "name": "What",
                           "fill": "#e3e8ff",
                           "content": "Charge + pack · sent",
@@ -10250,7 +10594,7 @@
                     },
                     {
                       "type": "frame",
-                      "id": "xsxv2",
+                      "id": "k1zIIJ",
                       "name": "Reminder Pack tonight",
                       "width": "fill_container",
                       "gap": 10,
@@ -10258,7 +10602,7 @@
                       "children": [
                         {
                           "type": "icon",
-                          "id": "WalfK",
+                          "id": "qqdyn",
                           "name": "Icon",
                           "width": 16,
                           "height": 16,
@@ -10268,7 +10612,7 @@
                         },
                         {
                           "type": "text",
-                          "id": "XISsY",
+                          "id": "Xmk9C",
                           "name": "When",
                           "fill": "#ffffff",
                           "content": "Fri 17:00",
@@ -10278,7 +10622,7 @@
                         },
                         {
                           "type": "text",
-                          "id": "ByFEi",
+                          "id": "rqs5M",
                           "name": "What",
                           "fill": "#e3e8ff",
                           "content": "Pack tonight",
@@ -10289,7 +10633,7 @@
                     },
                     {
                       "type": "frame",
-                      "id": "eFACW",
+                      "id": "TZWL4",
                       "name": "Reminder Leave + checklist",
                       "width": "fill_container",
                       "gap": 10,
@@ -10297,7 +10641,7 @@
                       "children": [
                         {
                           "type": "icon",
-                          "id": "TVOx7",
+                          "id": "B0xAL",
                           "name": "Icon",
                           "width": 16,
                           "height": 16,
@@ -10307,7 +10651,7 @@
                         },
                         {
                           "type": "text",
-                          "id": "vdOLd",
+                          "id": "iUe9W",
                           "name": "When",
                           "fill": "#ffffff",
                           "content": "Sat 04:30",
@@ -10317,7 +10661,7 @@
                         },
                         {
                           "type": "text",
-                          "id": "C47VC",
+                          "id": "EsTFn",
                           "name": "What",
                           "fill": "#e3e8ff",
                           "content": "Leave + checklist",
@@ -10332,7 +10676,7 @@
             },
             {
               "type": "frame",
-              "id": "vu5lW",
+              "id": "K3Witf",
               "name": "Later",
               "width": "fill_container",
               "layout": "vertical",
@@ -10340,16 +10684,16 @@
               "children": [
                 {
                   "type": "text",
-                  "id": "U93AJj",
+                  "id": "NQYep",
                   "name": "Section Label",
                   "fill": "$muted",
-                  "content": "Next 14 days",
+                  "content": "Coming up",
                   "fontFamily": "$font-body",
                   "fontSize": 13,
                   "fontWeight": "600"
                 },
                 {
-                  "id": "vjAur",
+                  "id": "Rz6i8",
                   "type": "ref",
                   "ref": "F2GAI",
                   "name": "Session Easy Run 6 km, Z2",
@@ -10364,11 +10708,19 @@
                     "yoWya": {
                       "content": "06:00"
                     },
-                    "COTOR": {
-                      "content": "Easy Run 6 km, Z2"
+                    "LXHrZ": {
+                      "enabled": false
+                    },
+                    "JPN9P": {
+                      "content": "In 3 days",
+                      "fill": "$accent-text",
+                      "fontWeight": "600"
                     },
                     "m3BzUa": {
-                      "content": "23 Nov"
+                      "content": "Monday, 23 November"
+                    },
+                    "COTOR": {
+                      "content": "Easy Run 6 km, Z2"
                     },
                     "c9R499/NaSzb": {
                       "icon": "footprints"
@@ -10385,7 +10737,7 @@
                   }
                 },
                 {
-                  "id": "LLGru",
+                  "id": "AnpYB",
                   "type": "ref",
                   "ref": "F2GAI",
                   "name": "Session Fartlek 7 km",
@@ -10400,11 +10752,19 @@
                     "yoWya": {
                       "content": "06:00"
                     },
-                    "COTOR": {
-                      "content": "Fartlek 7 km"
+                    "LXHrZ": {
+                      "enabled": false
+                    },
+                    "JPN9P": {
+                      "content": "In 5 days",
+                      "fill": "$muted",
+                      "fontWeight": "400"
                     },
                     "m3BzUa": {
-                      "content": "25 Nov"
+                      "content": "Wednesday, 25 November"
+                    },
+                    "COTOR": {
+                      "content": "Fartlek 7 km"
                     },
                     "c9R499/NaSzb": {
                       "icon": "footprints"
@@ -10421,7 +10781,7 @@
                   }
                 },
                 {
-                  "id": "rq7dr",
+                  "id": "KXkMo",
                   "type": "ref",
                   "ref": "F2GAI",
                   "name": "Session Long Run 14 km",
@@ -10436,11 +10796,19 @@
                     "yoWya": {
                       "content": "05:00"
                     },
-                    "COTOR": {
-                      "content": "Long Run 14 km"
+                    "LXHrZ": {
+                      "enabled": false
+                    },
+                    "JPN9P": {
+                      "content": "In 8 days",
+                      "fill": "$muted",
+                      "fontWeight": "400"
                     },
                     "m3BzUa": {
-                      "content": "28 Nov"
+                      "content": "Saturday, 28 November"
+                    },
+                    "COTOR": {
+                      "content": "Long Run 14 km"
                     },
                     "c9R499/NaSzb": {
                       "icon": "route"
@@ -10462,7 +10830,7 @@
                   }
                 },
                 {
-                  "id": "mqlGC",
+                  "id": "H2YcGg",
                   "type": "ref",
                   "ref": "F2GAI",
                   "name": "Session Race: Pertamina Eco RunFest HM",
@@ -10477,11 +10845,19 @@
                     "yoWya": {
                       "content": "05:00"
                     },
-                    "COTOR": {
-                      "content": "Race: Pertamina Eco RunFest HM"
+                    "LXHrZ": {
+                      "enabled": false
+                    },
+                    "JPN9P": {
+                      "content": "In 16 days",
+                      "fill": "$muted",
+                      "fontWeight": "400"
                     },
                     "m3BzUa": {
-                      "content": "6 Dec"
+                      "content": "Sunday, 6 December"
+                    },
+                    "COTOR": {
+                      "content": "Race: Pertamina Eco RunFest HM"
                     },
                     "c9R499/NaSzb": {
                       "icon": "medal"
@@ -10503,7 +10879,7 @@
         },
         {
           "type": "rectangle",
-          "id": "y3HFg",
+          "id": "a0eY7",
           "layoutPosition": "absolute",
           "x": 0,
           "y": 704,
@@ -10531,7 +10907,7 @@
           "height": 140
         },
         {
-          "id": "Y8hDRH",
+          "id": "uqFJl",
           "type": "ref",
           "ref": "M9tmU",
           "name": "Tab Bar",

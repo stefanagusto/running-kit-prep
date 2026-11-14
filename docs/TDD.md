@@ -307,6 +307,12 @@ Matching is by substring, not whole word. **[Decision]** A keyword inside a long
 | `Race pace 5 km` | race | known limit: "Race" matches. Avoid "Race" in training titles, or remove "Race" from the race keywords and keep only the race name ("RunFest") |
 | `` (empty) | nil | |
 
+## 5a. Place from the event location (added 14 Nov 2026)
+
+`PlaceResolver.place(location: String?, rules: PlaceRules) -> Place?` in RunPrepCore. `PlaceRules` holds `uiKeywords` (default "Universitas Indonesia", "UI", "Depok") and `homeKeywords` (default "Home", "Rumah"), stored in `AppSettings` and editable in S7. Matching is case- and diacritic-insensitive; keywords of three letters or fewer match whole words only, so "UI" does not match "Building". UI is checked before home. `CalendarEvent` gains `location: String?`, filled from `EKEvent.location`.
+
+Place order for a non-race session: the stored `SessionStateRecord.place` (my choice from a notification button or the picker) > `PlaceResolver` on the event location > nil. Races are always nil. A place from the location removes the place question from H-24 and H-12, the same as a chosen place.
+
 ## 6. Kit builder
 
 `func kit(for type: SessionType, place: Place?, items: [ItemRule]) -> Kit`

@@ -49,15 +49,35 @@ extension Session {
     }
 }
 
+enum ChipStyle {
+    case accent, neutral, warn
+}
+
 struct Chip: View {
     let text: String
     let symbol: String
-    var warn = false
+    var style = ChipStyle.accent
 
     var body: some View {
         ChipContent(text: text, symbol: symbol)
-            .foregroundStyle(warn ? Color("Warn") : Color.accentColor)
-            .background(warn ? Color("WarnSoft") : Color("AccentSoft"), in: Capsule())
+            .foregroundStyle(foreground)
+            .background(background, in: Capsule())
+    }
+
+    private var foreground: Color {
+        switch style {
+        case .accent: return Color.accentColor
+        case .neutral: return Color.secondary
+        case .warn: return Color("Warn")
+        }
+    }
+
+    private var background: Color {
+        switch style {
+        case .accent: return Color("AccentSoft")
+        case .neutral: return Color(.secondarySystemFill)
+        case .warn: return Color("WarnSoft")
+        }
     }
 }
 
@@ -80,6 +100,9 @@ struct ChipContent: View {
 
 struct SessionRow: View {
     let session: Session
+    var now = Date()
+
+    private var countdown: CountdownLabel { .forSession(session, now: now) }
 
     var body: some View {
         HStack(alignment: .top, spacing: 14) {
@@ -93,10 +116,8 @@ struct SessionRow: View {
             }
             .frame(minWidth: 56, alignment: .leading)
             VStack(alignment: .leading, spacing: 6) {
+                CountdownDateLine(label: countdown, dateText: session.longDateText)
                 Text(session.title).font(.headline)
-                Text(session.longDateText)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
                 ViewThatFits(in: .horizontal) {
                     HStack(spacing: 6) { chips }
                     VStack(alignment: .leading, spacing: 6) { chips }
@@ -106,12 +127,16 @@ struct SessionRow: View {
         .padding(.vertical, 4)
         .frame(minHeight: 44, alignment: .topLeading)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(session.accessibilityText)
+        .accessibilityLabel("\(countdown.text), \(session.accessibilityText)")
     }
 
     @ViewBuilder
     private var chips: some View {
-        Chip(text: session.type.label, symbol: session.type.symbol)
-        Chip(text: session.placeText, symbol: session.placeSymbol, warn: session.placeIsMissing)
+        Chip(text: session.type.label, symbol: session.type.symbol, style: .neutral)
+        Chip(
+            text: session.placeText,
+            symbol: session.placeSymbol,
+            style: session.placeIsMissing ? .warn : .neutral
+        )
     }
 }

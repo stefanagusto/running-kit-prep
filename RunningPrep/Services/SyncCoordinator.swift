@@ -17,16 +17,25 @@ final class SyncCoordinator {
 
     @ObservationIgnored private let calendar = CalendarService()
     @ObservationIgnored private let notifications = NotificationService()
-    @ObservationIgnored private var context: ModelContext?
+    @ObservationIgnored private let container: ModelContainer
+    @ObservationIgnored private var started = false
     @ObservationIgnored private var running = false
     @ObservationIgnored private var rerunRequested = false
     @ObservationIgnored private var debounce: Task<Void, Never>?
     @ObservationIgnored private var changeWatcher: Task<Void, Never>?
 
-    /// Starts watching calendar changes and runs the first rebuild.
-    func start(context: ModelContext) async {
-        self.context = context
-        notifications.registerCategories()
+    init(container: ModelContainer) {
+        self.container = container
+    }
+
+    private var context: ModelContext { container.mainContext }
+
+    /// Starts watching calendar changes and runs the first rebuild. Safe to call again.
+    func start() async {
+        if !started {
+            started = true
+            notifications.registerCategories()
+        }
         if changeWatcher == nil {
             changeWatcher = Task { [weak self] in
                 guard let stream = self?.calendar.changes() else { return }
@@ -47,7 +56,7 @@ final class SyncCoordinator {
 
     /// Replaces the ticked calendars. One rebuild follows.
     func setCalendars(_ ids: Set<String>) {
-        guard let context, !ids.isEmpty, ids != selectedCalendarIds else { return }
+        guard !ids.isEmpty, ids != selectedCalendarIds else { return }
         fetchOrCreateSettings(in: context).calendarIds = ids.sorted()
         try? context.save()
         requestRebuild()
@@ -55,11 +64,26 @@ final class SyncCoordinator {
 
     /// Used by the "calendar not found" state: choosing one adds it.
     func addCalendar(_ id: String) {
-        guard let context else { return }
         let settings = fetchOrCreateSettings(in: context)
         if !settings.calendarIds.contains(id) { settings.calendarIds.append(id) }
         try? context.save()
         requestRebuild()
+    }
+
+    /// Saves the chosen place, then rebuilds. Awaited so a notification action finishes before the app suspends.
+    func setPlace(_ place: Place, for key: String) async {
+        if case .sessions(let sessions) = state, sessions.first(where: { $0.key == key })?.type == .race { return }
+        let start = Self.startDate(fromKey: key) ?? Date()
+        storePlace(place, for: key, start: start, in: context)
+        await rebuildNow()
+    }
+
+    /// Session keys end in the start time (ISO 8601 UTC), see SessionBuilder.key.
+    private static func startDate(fromKey key: String) -> Date? {
+        guard let text = key.split(separator: "|").last else { return nil }
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+        return formatter.date(from: String(text))
     }
 
     func slots(for session: Session) -> [ReminderSlot] {
@@ -91,7 +115,6 @@ final class SyncCoordinator {
     }
 
     private func rebuild() async {
-        guard let context else { return }
         notificationStatus = await notifications.authorizationStatus()
         switch calendar.access {
         case .notDetermined:
@@ -115,8 +138,14 @@ final class SyncCoordinator {
         let now = Date()
         let config = PlannerConfig()
         let events = calendar.events(calendarIds: picked.map(\.id), from: now, days: config.windowDays)
+        deleteOldRecords(before: now, in: context)
         let sessions = SessionBuilder.sessions(
-            from: events, rules: settings.keywordRules, now: now, windowDays: config.windowDays
+            from: events,
+            rules: settings.keywordRules,
+            now: now,
+            windowDays: config.windowDays,
+            places: places(in: context),
+            placeRules: settings.placeRules
         )
         plan = ReminderPlanner.plan(
             sessions: sessions, states: [:], items: SeedItems.all, config: config, now: now, reinstallDate: nil

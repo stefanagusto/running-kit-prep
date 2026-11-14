@@ -94,7 +94,7 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 ## Phase 2: Reminders
 
 ## Task S3: Get reminders
-**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus. 17 new tests (15 planner, 2 session builder). Includes multiple calendars, calendar-name polish and a DEBUG-only light/dark switch (owner request; remove before release). Review fixes: H-24 asks "Where do you start? Choose in Run Prep." until S4 adds buttons; card timeline says "passed" (not "sent") for past times. Not compiled yet: waiting for `swift test` and the iPhone test script.
+**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus. 17 new tests (15 planner, 2 session builder). Includes multiple calendars, calendar-name polish and a DEBUG-only light/dark switch (owner request; remove before release). Review fixes: H-24 asks "Where do you start? Choose in Run Prep." until S4 adds buttons; card timeline says "passed" (not "sent") for past times. Owner test 14 Nov 2026: tests pass, test script passed, light and dark checked, notification permission prompt appears on first launch. DONE.
 **Acceptance criteria:**
 - [ ] Planner tests: 05:00 long run times, late-added session, moved event, 3 weeks of sessions, cap 60
 - [ ] H-24, H-12, leave reminders scheduled with the right text
@@ -104,11 +104,15 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 **Dependencies:** S2 | **Scope:** M | Model: Sonnet
 
 ## Task S4: Choose the place
+**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus. New tests: PlaceResolver 9, Countdown 6, SessionBuilder 5. Review fixes: store helper renamed `storePlace` (avoids a module-qualified call), type chips neutral so only the countdown is blue. Not compiled yet: waiting for `swift test` and the iPhone test script.
+**Also in S4 (owner request 14 Nov 2026):** countdown on Upcoming per DESIGN.md (frame 14): pill on the card, countdown as the first line of each row above the title, three tiers, neutral place chips, calendar-day counting, section "Coming up". Pure helper `Countdown.label(from:to:calendar:)` in RunPrepCore with tests (today, tomorrow, 2, 3, 4, 13, 16 days; late-evening and just-after-midnight edges).
 **Acceptance criteria:**
 - [ ] UI / Home actions on H-24 and H-12 (not for races) save the place
 - [ ] Place picker in Upcoming; change triggers rebuild
 - [ ] H-12 skips the question once the place is set
-**Dependencies:** S3 | **Scope:** S | Model: Sonnet
+- [ ] Place from the event location (owner request 14 Nov 2026): read `EKEvent.location`; a location matching a UI keyword ("Universitas Indonesia", "UI", "Depok"; "UI" as a whole word) gives UI campus, a home keyword ("Home", "Rumah") gives Home, otherwise unset. Order: my own choice for that session (buttons or picker) > event location > unset. Races ignore it. Keywords stored in AppSettings (editable in S7). Pure helper `PlaceResolver.place(location:rules:)` in RunPrepCore with tests (Universitas Indonesia, "Universitas Indonesia Jalan ...", "UI", "Building" must NOT match, Rumah, empty, race)
+- [ ] A place that came from the calendar shows on the card as the place (no question in the reminders), and can still be changed with the picker
+**Dependencies:** S3 | **Scope:** M (place from location + countdown added) | Model: Sonnet
 
 ## Task S5: Tick off my kit
 **Acceptance criteria:**
@@ -140,7 +144,7 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 **Acceptance criteria:**
 - [ ] App Intent "Refresh Run Reminders" appears in Shortcuts and rebuilds reminders
 - [ ] `docs/SHORTCUTS-SETUP.md` step-by-step for the 21:00 automation
-**Dependencies:** S3 | **Scope:** S | Model: Sonnet
+**Dependencies:** S3 | **Scope:** M (place from location + countdown added) | Model: Sonnet
 
 ## Task S9: Ask Siri (P1)
 **Acceptance criteria:**

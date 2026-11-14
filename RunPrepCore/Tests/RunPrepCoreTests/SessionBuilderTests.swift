@@ -77,4 +77,39 @@ final class SessionBuilderTests: XCTestCase {
         let sessions = SessionBuilder.sessions(from: events, rules: rules, now: now)
         XCTAssertEqual(sessions.map(\.type), [.long, .normal])
     }
+
+    func testLocationGivesUICampus() {
+        let e = CalendarEvent(id: "l", title: "Easy Run", start: now.addingTimeInterval(day), location: "Gedung UI, Depok")
+        let session = SessionBuilder.sessions(from: [e], now: now).first
+        XCTAssertEqual(session?.place, .ui)
+        XCTAssertEqual(session?.placeSource, .calendar)
+    }
+
+    func testStoredChoiceBeatsLocation() {
+        let e = CalendarEvent(id: "l", title: "Easy Run", start: now.addingTimeInterval(day), location: "Universitas Indonesia")
+        let key = SessionBuilder.key(id: e.id, start: e.start)
+        let session = SessionBuilder.sessions(from: [e], now: now, places: [key: .home]).first
+        XCTAssertEqual(session?.place, .home)
+        XCTAssertEqual(session?.placeSource, .chosen)
+    }
+
+    func testRaceIgnoresLocation() {
+        let e = CalendarEvent(id: "r", title: "Race - RunFest HM", start: now.addingTimeInterval(day), location: "Universitas Indonesia")
+        let session = SessionBuilder.sessions(from: [e], now: now).first
+        XCTAssertNil(session?.place)
+        XCTAssertNil(session?.placeSource)
+    }
+
+    func testNoPlaceHasNoSource() {
+        let e = CalendarEvent(id: "n", title: "Easy Run", start: now.addingTimeInterval(day), location: "Building 5")
+        let session = SessionBuilder.sessions(from: [e], now: now).first
+        XCTAssertNil(session?.place)
+        XCTAssertNil(session?.placeSource)
+    }
+
+    func testCustomPlaceRules() {
+        let e = CalendarEvent(id: "c", title: "Easy Run", start: now.addingTimeInterval(day), location: "Senayan")
+        let rules = PlaceRules(uiKeywords: ["Senayan"], homeKeywords: [])
+        XCTAssertEqual(SessionBuilder.sessions(from: [e], now: now, placeRules: rules).first?.place, .ui)
+    }
 }

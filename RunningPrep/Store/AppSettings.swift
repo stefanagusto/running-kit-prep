@@ -10,6 +10,9 @@ final class AppSettings {
     var longRunPrefixes: [String]
     var raceKeywords: [String]
     var runKeywords: [String]
+    /// Declaration-level defaults let SwiftData migrate old stores without a custom plan.
+    var uiKeywords: [String] = PlaceRules.default.uiKeywords
+    var homeKeywords: [String] = PlaceRules.default.homeKeywords
 
     init() {
         let rules = KeywordRules.default
@@ -22,5 +25,9 @@ final class AppSettings {
 
     var keywordRules: KeywordRules {
         KeywordRules(longRunPrefixes: longRunPrefixes, raceKeywords: raceKeywords, runKeywords: runKeywords)
+    }
+
+    var placeRules: PlaceRules {
+        PlaceRules(uiKeywords: uiKeywords, homeKeywords: homeKeywords)
     }
 }

@@ -4,8 +4,7 @@ import SwiftUI
 import UIKit
 
 struct UpcomingView: View {
-    @State private var sync = SyncCoordinator()
-    @Environment(\.modelContext) private var modelContext
+    let sync: SyncCoordinator
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.openURL) private var openURL
     @State private var showCalendarPicker = false
@@ -24,7 +23,7 @@ struct UpcomingView: View {
                 .navigationTitle("Upcoming")
                 .toolbar { toolbarItems }
         }
-        .task { await sync.start(context: modelContext) }
+        .task { await sync.start() }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { sync.requestRebuild() }
         }
@@ -122,14 +121,18 @@ struct UpcomingView: View {
         List {
             if let next = sessions.first {
                 Section {
-                    NextSessionCard(session: next, slots: sync.slots(for: next))
+                    NextSessionCard(
+                        session: next,
+                        slots: sync.slots(for: next),
+                        onPlace: { place in Task { await sync.setPlace(place, for: next.key) } }
+                    )
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.clear)
                 }
             }
             let rest = Array(sessions.dropFirst())
             if !rest.isEmpty {
-                Section("Next 14 days") {
+                Section("Coming up") {
                     ForEach(rest, id: \.key) { SessionRow(session: $0) }
                 }
             }

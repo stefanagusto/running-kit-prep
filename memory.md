@@ -33,5 +33,7 @@ Durable facts and decisions. Add new lines at the bottom of each section with th
 - 14 Nov 2026: S2 done on the iPhone: calendar access, grouped calendar sheet with search and tick, Upcoming with real sessions, 06.00 times, chips on one line. Owner wants to pick several calendars at once; scheduled into S3.
 - 14 Nov 2026: owner asked for a temporary light/dark switch to test both themes on the phone. Built in S3 as a DEBUG-only toolbar menu (top left, "Appearance"); it does not exist in release builds. Remove before release.
 
+- 14 Nov 2026: owner puts the run location in each calendar event ("Universitas Indonesia", "Universitas Indonesia Jalan ..."). S4 reads it: location keywords set UI campus or Home automatically; a choice made in the app for that session wins. Keywords editable in S7.
+
 ## Item list (source of truth until the app holds it)
 See the table in PLAN.md section 1.
