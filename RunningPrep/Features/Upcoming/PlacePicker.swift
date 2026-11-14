@@ -93,7 +93,7 @@ struct PlacePicker: View {
                 dragX = value.location.x
             }
             .onEnded { value in
-                let target = place(at: clamp(value.location.x, half: half), width: width)
+                let target: Place = clamp(value.location.x, half: half) < width / 2 ? .ui : .home
                 choose(target)
             }
     }
