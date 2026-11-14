@@ -467,6 +467,8 @@ AirPods: a Time Sensitive notification can be read aloud by Siri through Announc
 
 ### 8.3 Delegate
 
+**Device finding 14 Nov 2026:** the async delegate methods crashed on device ("Call must be made on main thread", NSInternalInconsistencyException) when a reminder was tapped, because iOS completes them on a background thread. The app uses the completion-handler versions and calls every completion handler on the main thread. Do not switch back to the async versions.
+
 `NotificationDelegate: NSObject, UNUserNotificationCenterDelegate`, assigned in `RunningPrepApp.init` (before the first scene, so cold-launch taps are not lost).
 
 ```swift
