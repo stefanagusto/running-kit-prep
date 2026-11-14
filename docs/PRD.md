@@ -227,7 +227,7 @@ Rules run in this order. The first match wins.
 | Order | Rule | Result |
 |---|---|---|
 | 1 | Title contains "Race" or "RunFest" | Race |
-| 2 | Title starts with "Long Run" | Long run |
+| 2 | Title contains "Long Run" (anywhere, since 14 Nov 2026) | Long run |
 | 3 | Title contains "Run", "Fartlek", "Interval" or "Tempo" | Normal run |
 | 4 | Anything else (Strength, Padel) | Skipped |
 

@@ -40,6 +40,11 @@ extension Session {
         start.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits))
     }
 
+    /// Short form for the row date line ("Sun 15 Nov"), so it fits next to the countdown.
+    var rowDateText: String {
+        start.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated))
+    }
+
     var longDateText: String {
         start.formatted(.dateTime.weekday(.wide).day().month(.wide))
     }
@@ -116,7 +121,7 @@ struct SessionRow: View {
             }
             .frame(minWidth: 56, alignment: .leading)
             VStack(alignment: .leading, spacing: 6) {
-                CountdownDateLine(label: countdown, dateText: session.longDateText)
+                CountdownDateLine(label: countdown, dateText: session.rowDateText)
                 Text(session.title).font(.headline)
                 ViewThatFits(in: .horizontal) {
                     HStack(spacing: 6) { chips }

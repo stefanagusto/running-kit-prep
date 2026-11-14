@@ -280,7 +280,7 @@ Seeding: on first launch (`seedVersion == 0`) insert these 14 rows with `sortOrd
 
 Algorithm (all comparisons on trimmed, case-insensitive, diacritic-insensitive text):
 1. If any race keyword is contained in the title: `.race`.
-2. Else if the title starts with any long-run prefix: `.long`.
+2. Else if the title contains any long-run phrase: `.long`. (Was "starts with" until 14 Nov 2026; "TEST Long Run 10 km" was read as a normal run.)
 3. Else if any run keyword is contained in the title: `.normal`.
 4. Else `nil`.
 
@@ -298,7 +298,7 @@ Matching is by substring, not whole word. **[Decision]** A keyword inside a long
 | `Tempo 6 km` | normal | "Tempo" |
 | `Interval 6 x 800` | normal | "Interval" |
 | `Fartlek` | normal | "Fartlek" |
-| `Morning Long Run` | normal | "Long Run" is not a prefix, "Run" matches |
+| `Morning Long Run` | long | "Long Run" anywhere in the title |
 | `10K tempo` | normal | "Tempo"; "10K" is not a keyword |
 | `10K` | nil | no keyword (short words avoided) |
 | `Strength` | nil | skipped |

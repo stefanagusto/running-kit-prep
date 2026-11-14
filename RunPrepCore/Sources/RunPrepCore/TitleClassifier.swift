@@ -19,13 +19,13 @@ public struct KeywordRules: Equatable, Sendable {
 }
 
 public enum TitleClassifier {
-    /// Order: race keyword, long-run prefix, run keyword, else nil (skip).
+    /// Order: race keyword, long-run phrase (anywhere in the title), run keyword, else nil (skip).
     public static func classify(title: String, rules: KeywordRules = .default) -> SessionType? {
         let text = normalize(title)
         if keys(rules.raceKeywords).contains(where: { text.contains($0) }) {
             return .race
         }
-        if keys(rules.longRunPrefixes).contains(where: { text.hasPrefix($0) }) {
+        if keys(rules.longRunPrefixes).contains(where: { text.contains($0) }) {
             return .long
         }
         if keys(rules.runKeywords).contains(where: { text.contains($0) }) {

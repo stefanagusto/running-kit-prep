@@ -41,6 +41,8 @@ struct CountdownDateLine: View {
                 Text(label.text)
                     .font(.subheadline.bold())
                     .foregroundStyle(Color.accentColor)
+                    .lineLimit(1)
+                    .fixedSize()
                     .padding(.horizontal, 10)
                     .padding(.vertical, 3)
                     .background(Color("AccentSoft"), in: Capsule())
