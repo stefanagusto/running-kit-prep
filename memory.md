@@ -27,5 +27,8 @@ Durable facts and decisions. Add new lines at the bottom of each section with th
 
 - 14 Nov 2026: guides approved (Checkpoint 0). S0 spike in `spike/` (throwaway). This folder is now its own git repo (branch main, no commits yet, no remote).
 
+- 14 Nov 2026, S0 result 1: free Personal Team ("Stefan Hutapea") cannot sign the Time Sensitive Notifications capability (Xcode: "Personal development teams ... do not support the Time Sensitive Notifications capability"). Leave reminder ships as a normal (.active) notification; for AirPods, turn on Announce Notifications for the app. Time Sensitive returns with the paid program. App Group, widget extension and Live Activity results still pending.
+- 14 Nov 2026, S0 done: on the free Personal Team, widget extension, App Group (app and widget), Live Activity (Lock Screen + Dynamic Island on iPhone 17) and normal notifications all work. Only Time Sensitive fails. Decision: P2 features stay in the plan without the paid program; no Time Sensitive entitlement in the real app. Check on 21 Nov 2026 that the 7-day expiry behaves as expected. Results in `spike/RESULTS.md`.
+
 ## Item list (source of truth until the app holds it)
 See the table in PLAN.md section 1.

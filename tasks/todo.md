@@ -65,9 +65,10 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 **Dependencies:** Checkpoint 0
 **Files:** `spike/` (throwaway), `memory.md`
 **Scope:** XS | Model: Sonnet writes project.yml, I run it on the Mac
-**Status 14 Nov 2026:** spike written in `spike/` (Sonnet, reviewed by Opus, not compiled). Waiting for the Mac run and `spike/RESULTS.md`.
+**Status 14 Nov 2026: DONE.** Ran on iPhone 17 with the free Personal Team. Pass: widget extension, App Group (app + widget), Live Activity, Dynamic Island, notifications. Fail: Time Sensitive (not supported on personal teams). Decision: P2 goes ahead without the paid program; no Time Sensitive entitlement. Details in `spike/RESULTS.md`.
 
 ## Task S1: Project skeleton + core seed
+**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus, seed checked against PRD by Haiku (0 mismatches). 25 XCTest cases. Not compiled yet: waiting for `swift test` and the app build on the Mac.
 **Acceptance criteria:**
 - [ ] `xcodegen generate` produces a project that builds an empty app
 - [ ] Seed items match the PRD table row by row

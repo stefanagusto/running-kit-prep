@@ -1,0 +1,37 @@
+# XcodeGen spec. The .xcodeproj is generated and never edited by hand.
+# On the Mac: `brew install xcodegen`, then run `xcodegen generate` in this folder.
+# Package tests run with `cd RunPrepCore && swift test`.
+name: RunningPrep
+options:
+  bundleIdPrefix: com.stefanagusto
+  deploymentTarget: { iOS: "26.0" }
+packages:
+  RunPrepCore: { path: RunPrepCore }
+targets:
+  RunningPrep:
+    type: application
+    platform: iOS
+    sources: [RunningPrep]
+    dependencies:
+      - package: RunPrepCore
+    info:
+      path: RunningPrep/Info.plist
+      properties:
+        CFBundleDisplayName: Run Prep
+        UILaunchScreen: {}
+        NSCalendarsFullAccessUsageDescription: "Reads your training calendar to plan kit reminders."
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIRequiresFullScreen: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.stefanagusto.RunningPrep
+        SWIFT_VERSION: "6.0"
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: ""
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+schemes:
+  RunningPrep:
+    build: { targets: { RunningPrep: all } }
+    run: { config: Debug }

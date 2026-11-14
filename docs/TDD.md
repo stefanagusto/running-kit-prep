@@ -457,6 +457,8 @@ Time Sensitive needs the `com.apple.developer.usernotifications.time-sensitive` 
 
 AirPods: a Time Sensitive notification can be read aloud by Siri through Announce Notifications (the user turns it on in iOS Settings, not in the app). Only the leave reminder is Time Sensitive; H-24 and H-12 stay `.active` so they do not interrupt. The S0 spike checks the capability on the free team. With the fallback the leave reminder is a normal notification and Siri will not announce it. This is device-tested (section 13.4), not unit-tested.
 
+**S0 result (14 Nov 2026):** the free Personal Team cannot sign Time Sensitive. `useTimeSensitive = false` and no Time Sensitive entitlement in project.yml. For AirPods, the owner turns on Announce Notifications for Run Prep in iOS Settings (per-app setting announces all of the app's notifications). Widget extension, App Group and Live Activity all passed, so the App Group and `RunningPrepWidgets` target are in (sections 3, 17).
+
 ### 8.3 Delegate
 
 `NotificationDelegate: NSObject, UNUserNotificationCenterDelegate`, assigned in `RunningPrepApp.init` (before the first scene, so cold-launch taps are not lost).
@@ -682,7 +684,7 @@ Paste output (errors only) back. No statement that code compiles or tests pass i
 
 | Slice | Modules / files | Notes |
 |---|---|---|
-| S0 Spike: free-team signing (Checkpoint 1, Mac) | Throwaway widget extension target + App Group `group.<bundle-prefix>.runningprep` + Time Sensitive entitlement, signed with the personal team | Record the result in `memory.md`. Pass: S10 and S11 go ahead. Fail: ship P1 only; Live Activity, widgets and control wait for the paid program (USD 99/year). Time Sensitive failing alone only triggers the `.active` fallback. |
+| S0 Spike: free-team signing (Checkpoint 1, Mac) **done 14 Nov 2026: all pass except Time Sensitive** | Throwaway widget extension target + App Group `group.<bundle-prefix>.runningprep` + Time Sensitive entitlement, signed with the personal team | Record the result in `memory.md`. Pass: S10 and S11 go ahead. Fail: ship P1 only; Live Activity, widgets and control wait for the paid program (USD 99/year). Time Sensitive failing alone only triggers the `.active` fallback. |
 | S1 Skeleton + core seed | `project.yml`, `README.md`, `.gitignore`, `RunPrepCore/Package.swift`, `Models/*`, `SeedItems`, `TitleClassifier`, `KitBuilder`, their tests | App target is an empty `RunningPrepApp` |
 | S2 Upcoming | `CalendarService`, `Store/*` (settings, seed on first launch), `OnboardingView`, `UpcomingView(+Model)`, `Mappers`, calendar picker | Reads sessions, no notifications |
 | S3 Reminders | `ReminderPlanner` + tests, `NotificationService`, `NotificationDelegate` (registration only), `SyncCoordinator` (triggers 1, 2) | Categories registered here |

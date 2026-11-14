@@ -1,6 +1,6 @@
 # Running Prep App - status
 
-Last updated: 14 Nov 2026. Status: **guides approved 14 Nov 2026. S0 signing spike written in `spike/`; waiting for the Mac run and `spike/RESULTS.md`.**
+Last updated: 14 Nov 2026. Status: **S0 done 14 Nov 2026 (free Apple ID can do everything except Time Sensitive). S1 code written; waiting for `swift test` and the build on the Mac.**
 
 This file is the progress hub. Details live in:
 
@@ -26,8 +26,9 @@ This file is the progress hub. Details live in:
 | 6 | D3 Design system (Liquid Glass, Start Line tokens) | done 14 Nov (Opus, pen.dev) |
 | 7 | D4 Screens + ecosystem surfaces | done 14 Nov (Opus, pen.dev) |
 | 8 | Checkpoint 0: my review of PRD, TDD, design | approved 14 Nov |
-| 9 | Phase 1: S0 free-team signing spike | code written 14 Nov, **waiting for Mac run** |
-| 9b | Phase 1: S1 skeleton + core, S2 Upcoming | not started |
+| 9 | Phase 1: S0 free-team signing spike | done 14 Nov: all pass except Time Sensitive |
+| 9b | Phase 1: S1 skeleton + core | code written 14 Nov, **waiting for Mac test run** |
+| 9c | Phase 1: S2 Upcoming | not started |
 | 10 | Phase 2: reminders, place, checklist, Siri intents | not started |
 | 11 | Phase 3: items, settings, nightly refresh | not started |
 | 12 | Phase 4 (P2): Live Activity, widgets, Control Center control | not started |

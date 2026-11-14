@@ -353,7 +353,7 @@ Settled in the Opus review (14 Nov 2026), change them if you disagree:
 
 Added 14 Nov 2026 (still open):
 
-11. Free-team spike result: can the personal team sign a widget extension, an App Group and Time Sensitive? Answer comes at Checkpoint 1. If not, ship P1 only (section 16).
+11. Free-team spike result: answered 14 Nov 2026. Widget extension, App Group, Live Activity and Dynamic Island work on the free Apple ID; Time Sensitive does not. P2 stays in the plan; the leave reminder is a normal notification (turn on Announce Notifications for the app to hear it on AirPods).
 12. AlarmKit wanted? An optional "loud leave alarm" for 05:00 long runs (P3). Needs user permission. Yes or no?
 
 ## 15. Release plan

@@ -8,9 +8,11 @@ Nothing here was compiled. It was written on Windows with no Swift toolchain, so
 
 0. Get the code: commit and push this repo from Windows (`git remote add origin <your GitHub repo>`, `git push -u origin main`), then `git clone` or `git pull` on the Mac. Needs Xcode 26 or later (iOS 26 SDK).
 1. Install XcodeGen: `brew install xcodegen`.
-2. Replace `CHANGE-ME` with a unique reverse-DNS name in `project.yml` (every place it appears) and in `Shared/SpikeActivityAttributes.swift` (the app group string appears once there; use the same value as in `project.yml`).
-3. Run `cd spike && xcodegen generate`.
-4. Open `SigningSpike.xcodeproj`.
+2. In Terminal, go into this folder: `cd ~/running-kit-prep/spike` (adjust the path to where you cloned the repo).
+3. Replace the `CHANGE-ME` placeholder with your own unique name in every file, with one command:
+   `grep -rl "CHANGE-ME" . | xargs sed -i '' 's/CHANGE-ME/stefanagusto/g'`
+   (Free Apple IDs need bundle ids nobody else uses; any unique word works.)
+4. Generate the Xcode project from `project.yml`: `xcodegen generate`. This creates `SigningSpike.xcodeproj` in this folder. Then open it: `open SigningSpike.xcodeproj`. If you change `project.yml` later, run `xcodegen generate` again.
 5. For both targets (SigningSpike and SpikeWidgets), open Signing & Capabilities and pick your personal team.
 6. Plug in the iPhone. Turn on Developer Mode if asked. Run the SigningSpike scheme.
 7. On the iPhone, trust the developer profile: Settings > General > VPN & Device Management.
