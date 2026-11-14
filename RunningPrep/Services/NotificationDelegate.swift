@@ -7,7 +7,7 @@ enum PlaceAction {
 }
 
 /// Assigned in RunningPrepApp.init so a cold-launch tap is not lost.
-/// Place actions work with no UI. The default tap only opens the app until the checklist deep link (S5).
+/// Place actions work with no UI. The default tap sets the router's pending session, which Upcoming turns into the checklist.
 final class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate, @unchecked Sendable {
     static let shared = NotificationDelegate()
 
@@ -29,6 +29,8 @@ final class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate, @u
             await AppEnvironment.shared.sync.setPlace(.ui, for: key)
         case PlaceAction.home:
             await AppEnvironment.shared.sync.setPlace(.home, for: key)
+        case UNNotificationDefaultActionIdentifier:
+            await MainActor.run { AppEnvironment.shared.router.pendingSessionKey = key }
         default:
             break
         }

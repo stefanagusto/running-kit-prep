@@ -8,6 +8,7 @@ final class AppEnvironment {
 
     let container: ModelContainer
     let sync: SyncCoordinator
+    let router = Router()
 
     private init() {
         do {

@@ -115,6 +115,7 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 **Dependencies:** S3 | **Scope:** M (place from location + countdown added) | Model: Sonnet
 
 ## Task S5: Tick off my kit
+**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus (moved a helper out so SyncCoordinator stays near 200 lines). 7 new checklist tests. Also in this round: slower place-picker glide (owner request: about 0.55 s spring, lens stays swollen while moving, labels fade across). Not compiled yet: waiting for `swift test` and the iPhone test script.
 **Acceptance criteria:**
 - [ ] Leave reminder tap opens that session's Checklist
 - [ ] Place question first when unset; ticks saved per session

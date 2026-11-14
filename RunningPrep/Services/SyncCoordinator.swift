@@ -75,15 +75,27 @@ final class SyncCoordinator {
         if case .sessions(let sessions) = state, sessions.first(where: { $0.key == key })?.type == .race { return }
         let start = Self.startDate(fromKey: key) ?? Date()
         storePlace(place, for: key, start: start, in: context)
+        if case .sessions(let sessions) = state, let session = sessions.first(where: { $0.key == key }) {
+            // A new place changes the kit, so the saved ticks may now complete it or not.
+            refreshCompletion(session: session, place: place)
+        }
         await rebuildNow()
     }
 
-    /// Session keys end in the start time (ISO 8601 UTC), see SessionBuilder.key.
-    private static func startDate(fromKey key: String) -> Date? {
-        guard let text = key.split(separator: "|").last else { return nil }
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime]
-        return formatter.date(from: String(text))
+    /// Saves one tick, updates "all set" and rebuilds when completion changed (leave reminder goes or returns).
+    func tick(_ tickKey: String, session: Session, kit: Kit) {
+        let wasComplete = completedStates(in: context)[session.key]?.completed == true
+        let ticked = toggleTick(tickKey, for: session.key, start: session.start, in: context)
+        let nowComplete = Checklist.isComplete(kit: kit, ticked: ticked)
+        guard nowComplete != wasComplete else { return }
+        setCompleted(nowComplete, for: session.key, in: context)
+        requestRebuild()
+    }
+
+    private func refreshCompletion(session: Session, place: Place) {
+        let kit = KitBuilder.kit(for: session.type, place: place, items: SeedItems.all)
+        let complete = Checklist.isComplete(kit: kit, ticked: ticks(for: session.key, in: context))
+        setCompleted(complete, for: session.key, in: context)
     }
 
     func slots(for session: Session) -> [ReminderSlot] {
@@ -147,8 +159,9 @@ final class SyncCoordinator {
             places: places(in: context),
             placeRules: settings.placeRules
         )
+        let states = completedStates(in: context)
         plan = ReminderPlanner.plan(
-            sessions: sessions, states: [:], items: SeedItems.all, config: config, now: now, reinstallDate: nil
+            sessions: sessions, states: states, items: SeedItems.all, config: config, now: now, reinstallDate: nil
         )
         state = sessions.isEmpty ? .empty : .sessions(sessions)
         if notificationStatus == .notDetermined, !sessions.isEmpty {
@@ -157,6 +170,7 @@ final class SyncCoordinator {
         }
         if notificationStatus == .allowed {
             await notifications.replaceAll(plan)
+            await notifications.removeDelivered(forSessions: Set(states.keys))
         }
         lastSyncDate = now
     }

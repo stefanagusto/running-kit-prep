@@ -69,6 +69,17 @@ final class NotificationService {
         }
     }
 
+    /// A completed session needs no reminder left in Notification Centre.
+    func removeDelivered(forSessions keys: Set<String>) async {
+        guard !keys.isEmpty else { return }
+        let delivered = await center.deliveredNotifications()
+        let ids = delivered.compactMap { note -> String? in
+            guard let key = note.request.content.userInfo["sessionKey"] as? String, keys.contains(key) else { return nil }
+            return note.request.identifier
+        }
+        if !ids.isEmpty { center.removeDeliveredNotifications(withIdentifiers: ids) }
+    }
+
     func pendingCount() async -> Int {
         await center.pendingNotificationRequests().count
     }

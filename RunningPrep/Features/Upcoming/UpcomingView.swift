@@ -5,13 +5,14 @@ import UIKit
 
 struct UpcomingView: View {
     let sync: SyncCoordinator
+    @Bindable var router: Router
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.openURL) private var openURL
     @State private var showCalendarPicker = false
     @State private var draftSelection: Set<String> = []
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $router.path) {
             content
                 .safeAreaInset(edge: .top) {
                     if showsNotificationsBanner {
@@ -22,8 +23,11 @@ struct UpcomingView: View {
                 }
                 .navigationTitle("Upcoming")
                 .toolbar { toolbarItems }
+                .navigationDestination(for: String.self) { destination(for: $0) }
         }
         .task { await sync.start() }
+        .onChange(of: router.pendingSessionKey, initial: true) { consumePending() }
+        .onChange(of: sync.state) { consumePending() }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { sync.requestRebuild() }
         }
@@ -124,7 +128,8 @@ struct UpcomingView: View {
                     NextSessionCard(
                         session: next,
                         slots: sync.slots(for: next),
-                        onPlace: { place in Task { await sync.setPlace(place, for: next.key) } }
+                        onPlace: { place in Task { await sync.setPlace(place, for: next.key) } },
+                        onOpenChecklist: { router.path.append(next.key) }
                     )
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.clear)
@@ -133,10 +138,36 @@ struct UpcomingView: View {
             let rest = Array(sessions.dropFirst())
             if !rest.isEmpty {
                 Section("Coming up") {
-                    ForEach(rest, id: \.key) { SessionRow(session: $0) }
+                    ForEach(rest, id: \.key) { session in
+                        NavigationLink(value: session.key) { SessionRow(session: session) }
+                    }
                 }
             }
         }
         .refreshable { await sync.rebuildNow() }
+    }
+
+    /// A notification tap waits until the sessions have loaded (cold launch), then opens that checklist.
+    private func consumePending() {
+        guard let key = router.pendingSessionKey else { return }
+        if case .loading = sync.state { return }
+        router.pendingSessionKey = nil
+        router.path = [key]
+    }
+
+    @ViewBuilder
+    private func destination(for key: String) -> some View {
+        if case .sessions(let sessions) = sync.state, let session = sessions.first(where: { $0.key == key }) {
+            ChecklistView(session: session, sync: sync)
+        } else {
+            ContentUnavailableView {
+                Label("This session was changed", systemImage: "calendar.badge.exclamationmark")
+            } description: {
+                Text("It is no longer in your calendar, or it moved.")
+            } actions: {
+                Button("Back to Upcoming") { router.path = [] }
+                    .buttonStyle(.borderedProminent)
+            }
+        }
     }
 }

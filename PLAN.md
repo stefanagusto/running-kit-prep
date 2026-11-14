@@ -1,6 +1,6 @@
 # Running Prep App - status
 
-Last updated: 14 Nov 2026. Status: **S0 to S3 done. S4 (place buttons, place from location, countdown) written 14 Nov; waiting for the Mac and iPhone run.**
+Last updated: 14 Nov 2026. Status: **S0 to S4 done. S5 (Kit check) written 14 Nov; waiting for the Mac and iPhone run.**
 
 This file is the progress hub. Details live in:
 

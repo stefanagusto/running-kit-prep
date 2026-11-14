@@ -78,7 +78,7 @@ struct PlacePicker: View {
         .font(.subheadline.weight(.semibold))
         .foregroundStyle(on ? Self.cobalt : Color.white)
         .frame(maxWidth: .infinity, minHeight: 44)
-        .animation(.easeOut(duration: 0.15), value: on)
+        .animation(.easeInOut(duration: 0.35).delay(0.1), value: on)
     }
 
     // MARK: - Gesture
@@ -87,25 +87,34 @@ struct PlacePicker: View {
         DragGesture(minimumDistance: 0)
             .onChanged { value in
                 if !pressing {
-                    withAnimation(.spring(response: 0.25, dampingFraction: 0.65)) { pressing = true }
+                    withAnimation(.spring(duration: 0.3, bounce: 0.25)) { pressing = true }
                 }
-                // A plain tap jumps the thumb to the tapped side; a slide tracks the finger.
-                dragX = value.location.x
+                // A tap only swells the thumb; it glides on release. A real slide tracks the finger.
+                guard dragX != nil || abs(value.translation.width) > 6 else { return }
+                withAnimation(.interactiveSpring(response: 0.3, dampingFraction: 0.86)) {
+                    dragX = value.location.x
+                }
             }
             .onEnded { value in
-                let target: Place = clamp(value.location.x, half: half) < width / 2 ? .ui : .home
+                // A tap picks the tapped side; a slide picks the side the thumb is over.
+                let x = dragX ?? value.location.x
+                let target: Place = clamp(x, half: half) < width / 2 ? .ui : .home
                 choose(target)
             }
     }
 
     private func choose(_ target: Place) {
-        let animation: Animation = reduceMotion
-            ? .easeOut(duration: 0.15)
-            : .spring(response: 0.38, dampingFraction: 0.72)
-        withAnimation(animation) {
-            pressing = false
+        // Slow, soft glide like a tab bar lens: about half a second with a small settle.
+        let glide: Animation = reduceMotion
+            ? .easeOut(duration: 0.2)
+            : .spring(duration: 0.55, bounce: 0.18)
+        withAnimation(glide) {
             dragX = nil
             if target != selection { pending = target }
+        }
+        // The lens stays swollen while it travels, then shrinks back once it lands.
+        withAnimation(reduceMotion ? .easeOut(duration: 0.2) : .spring(duration: 0.45, bounce: 0.2).delay(0.25)) {
+            pressing = false
         }
         if target != selection { select(target) }
     }

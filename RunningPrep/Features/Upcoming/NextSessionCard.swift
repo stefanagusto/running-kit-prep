@@ -5,6 +5,7 @@ struct NextSessionCard: View {
     let session: Session
     let slots: [ReminderSlot]
     let onPlace: (Place) -> Void
+    let onOpenChecklist: () -> Void
     var now = Date()
 
     private static let lightText = Color(red: 0xE3 / 255, green: 0xE8 / 255, blue: 0xFF / 255)
@@ -23,9 +24,13 @@ struct NextSessionCard: View {
             if session.type != .race {
                 PlacePrompt(session: session, select: onPlace)
             } else {
-                KitSummaryLine(session: session)
-                    .padding(.top, 4)
+                Button(action: onOpenChecklist) {
+                    KitSummaryLine(session: session)
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 4)
             }
+            openButton
             ReminderTimeline(slots: slots, now: now)
         }
         .foregroundStyle(.white)
@@ -64,6 +69,19 @@ struct NextSessionCard: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Next session. \(countdown.text), \(weekday). \(session.accessibilityText)")
+    }
+
+    private var openButton: some View {
+        Button(action: onOpenChecklist) {
+            Label("Open kit check", systemImage: "checklist")
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(PlacePicker.cobalt)
+                .padding(.horizontal, 16)
+                .frame(minHeight: 44)
+                .background(.white, in: Capsule())
+        }
+        .buttonStyle(.plain)
+        .padding(.top, 4)
     }
 
     private var lanes: some View {
