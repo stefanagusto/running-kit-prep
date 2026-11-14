@@ -1,0 +1,64 @@
+# Replace CHANGE-ME (here, and in Shared/SpikeActivityAttributes.swift) with a unique reverse-DNS name.
+# Free teams need unique bundle ids. To test without a capability, delete its entitlement line and regenerate.
+name: SigningSpike
+options:
+  bundleIdPrefix: com.CHANGE-ME
+  deploymentTarget:
+    iOS: "26.0"
+settings:
+  base:
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  SigningSpike:
+    type: application
+    platform: iOS
+    sources:
+      - App
+      - Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.CHANGE-ME.SigningSpike
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Run Prep Spike
+        NSSupportsLiveActivities: true
+        UILaunchScreen: {}
+    entitlements:
+      path: App/SigningSpike.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.CHANGE-ME.runprep.spike
+        com.apple.developer.usernotifications.time-sensitive: true
+    dependencies:
+      - target: SpikeWidgets
+        embed: true
+  SpikeWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - Widgets
+      - Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.CHANGE-ME.SigningSpike.widgets
+    info:
+      path: Widgets/Info.plist
+      properties:
+        CFBundleDisplayName: Spike Widgets
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: Widgets/SpikeWidgets.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.CHANGE-ME.runprep.spike
+    dependencies:
+      - sdk: WidgetKit.framework
+      - sdk: SwiftUI.framework
