@@ -36,6 +36,7 @@ struct KitBar: View {
         .glassEffect(.regular, in: .capsule)
         .padding(.horizontal, 16)
         .padding(.bottom, 8)
+        .scrollEdgeFade()
     }
 }
 
@@ -52,5 +53,26 @@ struct DoneBar: View {
         .buttonBorderShape(.capsule)
         .padding(.horizontal, 16)
         .padding(.bottom, 8)
+        .scrollEdgeFade()
+    }
+}
+
+private extension View {
+    /// Rows fade out before they pass under the floating bar, so the glass never
+    /// shows text through text (DESIGN.md: scroll edge under floating bars).
+    func scrollEdgeFade() -> some View {
+        background(alignment: .bottom) {
+            LinearGradient(
+                stops: [
+                    .init(color: Color(.systemGroupedBackground).opacity(0), location: 0),
+                    .init(color: Color(.systemGroupedBackground), location: 0.45)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .padding(.top, -48)
+            .ignoresSafeArea(edges: .bottom)
+            .allowsHitTesting(false)
+        }
     }
 }

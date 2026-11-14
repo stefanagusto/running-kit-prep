@@ -54,7 +54,7 @@ struct ChecklistView: View {
             ChecklistProgressHeader(
                 done: counts.done,
                 total: counts.total,
-                segments: kit.items.map { ticked.contains(Checklist.tickKey($0)) }
+                segments: (0..<counts.total).map { $0 < counts.done }
             )
             .clearRow()
         }

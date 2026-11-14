@@ -115,7 +115,7 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 **Dependencies:** S3 | **Scope:** M (place from location + countdown added) | Model: Sonnet
 
 ## Task S5: Tick off my kit
-**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus (moved a helper out so SyncCoordinator stays near 200 lines). 7 new checklist tests. Also in this round: slower place-picker glide (owner request: about 0.55 s spring, lens stays swollen while moving, labels fade across). Not compiled yet: waiting for `swift test` and the iPhone test script.
+**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus (moved a helper out so SyncCoordinator stays near 200 lines). 7 new checklist tests. Also in this round: slower place-picker glide (owner request: about 0.55 s spring, lens stays swollen while moving, labels fade across). Owner run 14 Nov 2026: Kit check opens from the card, ticks are saved, place change drops kunci motor and STNK (8 to 6). Fixes after the run: lanes fill from the left, scroll-edge fade under the floating bars (glass showed row text through). Still to confirm: ALL SET, leave-reminder deep link, light mode, swift test count.
 **Acceptance criteria:**
 - [ ] Leave reminder tap opens that session's Checklist
 - [ ] Place question first when unset; ticks saved per session
