@@ -36,11 +36,23 @@ final class NotificationService {
             UNNotificationAction(identifier: PlaceAction.ui, title: "Start at UI campus", options: []),
             UNNotificationAction(identifier: PlaceAction.home, title: "Start at home", options: [])
         ]
+        // The leave reminder gets a visible button as well as the tap, and it opens the app.
+        let openKit = UNNotificationAction(
+            identifier: PlaceAction.openKit,
+            title: "Open kit check",
+            options: [.foreground],
+            icon: UNNotificationActionIcon(systemImageName: "checklist")
+        )
         let categories = ReminderCategory.allCases.map { category in
-            let hasPlaceActions = category == .h24 || category == .h12Ask
+            let actions: [UNNotificationAction]
+            switch category {
+            case .h24, .h12Ask: actions = placeActions
+            case .leave: actions = [openKit]
+            default: actions = []
+            }
             return UNNotificationCategory(
                 identifier: category.rawValue,
-                actions: hasPlaceActions ? placeActions : [],
+                actions: actions,
                 intentIdentifiers: [],
                 options: []
             )

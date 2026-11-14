@@ -4,6 +4,7 @@ import UserNotifications
 enum PlaceAction {
     static let ui = "PLACE_UI"
     static let home = "PLACE_HOME"
+    static let openKit = "OPEN_KIT"
 }
 
 /// Assigned in RunningPrepApp.init so a cold-launch tap is not lost.
@@ -29,7 +30,7 @@ final class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate, @u
             await AppEnvironment.shared.sync.setPlace(.ui, for: key)
         case PlaceAction.home:
             await AppEnvironment.shared.sync.setPlace(.home, for: key)
-        case UNNotificationDefaultActionIdentifier:
+        case UNNotificationDefaultActionIdentifier, PlaceAction.openKit:
             await MainActor.run { AppEnvironment.shared.router.pendingSessionKey = key }
         default:
             break

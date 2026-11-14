@@ -245,7 +245,7 @@ Three reminders per session. Times are relative to the session start.
 |---|---|---|---|---|---|
 | H-24 | Start minus 24 h (editable) | "Tomorrow 05:00 Long Run 18 km" | "Charge watch + AirPods. Pack: gel, electrolyte, cap, banana." | "Start at UI", "Start at home" (not for races) | Trigger time is already past. Session type is skipped. |
 | H-12 | Start minus 12 h (editable) | "Pack tonight" | "Long Run 18 km, 05:00. Pack: gel, electrolyte, cap, banana." | "Start at UI", "Start at home" only if the place is unset (not for races) | Trigger time is already past. Session type is skipped. Normal run with the place already set (nothing to pack). |
-| Leave | Start minus 30 min (editable) | "Time to go" | "Check your kit." | Tap opens the checklist | Trigger time is already past. Checklist is already "All set". |
+| Leave | Start minus 30 min (editable) | "Time to go" | "Check your kit." | Tap, or the "Open kit check" button (added 14 Nov 2026), opens the checklist | Trigger time is already past. Checklist is already "All set". |
 
 Rules:
 - Body text is built from the session type and place. Items that do not apply are not listed.
