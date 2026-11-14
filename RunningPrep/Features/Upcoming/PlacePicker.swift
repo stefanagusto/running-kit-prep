@@ -1,46 +1,143 @@
 import RunPrepCore
 import SwiftUI
 
-/// Two-segment place control for the cobalt card. Plain translucent capsule, so it
-/// does not depend on a glass API and still reads with Reduce Transparency on.
+/// Two-place control for the cobalt card with a Liquid Glass thumb.
+/// Tap a side, or press, hold and slide: the thumb swells into a glass lens,
+/// follows the finger and springs into place on release.
 struct PlacePicker: View {
     let selection: Place?
     let select: (Place) -> Void
 
     static let cobalt = Color(red: 0x1F / 255, green: 0x3F / 255, blue: 0xD6 / 255)
 
+    /// Thumb centre while the finger is down; nil when resting.
+    @State private var dragX: CGFloat?
+    @State private var pressing = false
+    /// Shown immediately after release, until the rebuild reports the new place.
+    @State private var pending: Place?
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    private let inset: CGFloat = 3
+    private let height: CGFloat = 50
+
+    private var shown: Place? { pending ?? selection }
+
     var body: some View {
-        HStack(spacing: 0) {
-            segment(.ui, title: "UI campus", symbol: "bicycle", label: "Start at UI campus")
-            segment(.home, title: "Home", symbol: "house", label: "Start at home")
+        GeometryReader { geo in
+            let half = (geo.size.width - inset * 2) / 2
+            let center = thumbCenter(half: half)
+            let hovered = place(at: center, width: geo.size.width)
+            ZStack(alignment: .leading) {
+                if shown != nil || dragX != nil {
+                    thumb(width: half)
+                        .position(x: center, y: height / 2)
+                }
+                HStack(spacing: 0) {
+                    label(.ui, title: "UI campus", symbol: "bicycle", on: hovered == .ui)
+                    label(.home, title: "Home", symbol: "house", on: hovered == .home)
+                }
+                .padding(.horizontal, inset)
+                .allowsHitTesting(false)
+            }
+            .frame(width: geo.size.width, height: height)
+            .background(.white.opacity(0.14), in: Capsule())
+            .overlay(Capsule().stroke(.white.opacity(0.35), lineWidth: 1))
+            .contentShape(Capsule())
+            .gesture(drag(width: geo.size.width, half: half))
+            .sensoryFeedback(.selection, trigger: hovered)
         }
-        .padding(3)
-        .background(.white.opacity(0.14), in: Capsule())
-        .overlay(Capsule().stroke(.white.opacity(0.35), lineWidth: 1))
+        .frame(height: height)
+        .onChange(of: selection) { _, new in
+            if new == pending { pending = nil }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Start place")
+        .accessibilityValue(valueText)
+        .accessibilityHint("Swipe up or down to switch between UI campus and Home.")
+        .accessibilityAdjustableAction { _ in choose(shown == .ui ? .home : .ui) }
+        .accessibilityAction(named: "Start at UI campus") { choose(.ui) }
+        .accessibilityAction(named: "Start at home") { choose(.home) }
     }
 
-    private func segment(_ place: Place, title: String, symbol: String, label: String) -> some View {
-        let selected = selection == place
-        return Button {
-            select(place)
-        } label: {
-            HStack(spacing: 6) {
-                Image(systemName: symbol).imageScale(.medium)
-                Text(title).lineLimit(1)
-            }
-            .font(.subheadline.weight(.semibold))
-            .foregroundStyle(selected ? Self.cobalt : Color.white)
-            .frame(maxWidth: .infinity, minHeight: 44)
-            .background(selected ? Color.white : Color.clear, in: Capsule())
-            .contentShape(Capsule())
+    // MARK: - Pieces
+
+    private func thumb(width: CGFloat) -> some View {
+        Capsule()
+            .fill(.white.opacity(pressing ? 0.82 : 1))
+            .frame(width: width, height: height - inset * 2)
+            .glassEffect(.regular.interactive(), in: Capsule())
+            .scaleEffect(pressing && !reduceMotion ? CGSize(width: 1.08, height: 1.16) : CGSize(width: 1, height: 1))
+            .shadow(color: .black.opacity(pressing ? 0.25 : 0.12), radius: pressing ? 10 : 4, y: pressing ? 4 : 2)
+    }
+
+    private func label(_ place: Place, title: String, symbol: String, on: Bool) -> some View {
+        HStack(spacing: 6) {
+            Image(systemName: symbol).imageScale(.medium)
+            Text(title).lineLimit(1)
         }
-        .buttonStyle(.plain)
-        .accessibilityLabel(label)
-        .accessibilityAddTraits(selected ? .isSelected : [])
+        .font(.subheadline.weight(.semibold))
+        .foregroundStyle(on ? Self.cobalt : Color.white)
+        .frame(maxWidth: .infinity, minHeight: 44)
+        .animation(.easeOut(duration: 0.15), value: on)
+    }
+
+    // MARK: - Gesture
+
+    private func drag(width: CGFloat, half: CGFloat) -> some Gesture {
+        DragGesture(minimumDistance: 0)
+            .onChanged { value in
+                if !pressing {
+                    withAnimation(.spring(response: 0.25, dampingFraction: 0.65)) { pressing = true }
+                }
+                // A plain tap jumps the thumb to the tapped side; a slide tracks the finger.
+                dragX = value.location.x
+            }
+            .onEnded { value in
+                let target = place(at: clamp(value.location.x, half: half), width: width)
+                choose(target)
+            }
+    }
+
+    private func choose(_ target: Place) {
+        let animation: Animation = reduceMotion
+            ? .easeOut(duration: 0.15)
+            : .spring(response: 0.38, dampingFraction: 0.72)
+        withAnimation(animation) {
+            pressing = false
+            dragX = nil
+            if target != selection { pending = target }
+        }
+        if target != selection { select(target) }
+    }
+
+    // MARK: - Geometry
+
+    private func thumbCenter(half: CGFloat) -> CGFloat {
+        if let dragX { return clamp(dragX, half: half) }
+        let index: CGFloat = shown == .home ? 1 : 0
+        return inset + half * index + half / 2
+    }
+
+    private func clamp(_ x: CGFloat, half: CGFloat) -> CGFloat {
+        min(max(x, inset + half / 2), inset + half * 1.5)
+    }
+
+    private func place(at x: CGFloat, width: CGFloat) -> Place? {
+        if dragX == nil, shown == nil { return nil }
+        return x < width / 2 ? .ui : .home
+    }
+
+    private var valueText: String {
+        switch shown {
+        case .ui: return "UI campus"
+        case .home: return "Home"
+        case .none: return "Not set"
+        }
     }
 }
 
-/// The card's one action: the prompt, the picker and, when the calendar chose, where that came from.
+/// The card's one action: the prompt, the picker, the kit it implies and, when the
+/// calendar chose, where that came from.
 struct PlacePrompt: View {
     let session: Session
     let select: (Place) -> Void
@@ -52,6 +149,7 @@ struct PlacePrompt: View {
             Text("Where do you start?")
                 .font(.headline.weight(.bold))
             PlacePicker(selection: session.place, select: select)
+            KitSummaryLine(session: session)
             if session.placeSource == .calendar {
                 Text(sourceText)
                     .font(.footnote)

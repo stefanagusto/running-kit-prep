@@ -22,6 +22,9 @@ struct NextSessionCard: View {
             summary
             if session.type != .race {
                 PlacePrompt(session: session, select: onPlace)
+            } else {
+                KitSummaryLine(session: session)
+                    .padding(.top, 4)
             }
             ReminderTimeline(slots: slots, now: now)
         }

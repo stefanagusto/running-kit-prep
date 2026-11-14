@@ -104,7 +104,7 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 **Dependencies:** S2 | **Scope:** M | Model: Sonnet
 
 ## Task S4: Choose the place
-**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus. New tests: PlaceResolver 9, Countdown 6, SessionBuilder 5. Review fixes: store helper renamed `storePlace` (avoids a module-qualified call), type chips neutral so only the countdown is blue. Not compiled yet: waiting for `swift test` and the iPhone test script.
+**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus. New tests: PlaceResolver 9, Countdown 6, SessionBuilder 5. Review fixes: store helper renamed `storePlace` (avoids a module-qualified call), type chips neutral so only the countdown is blue. Owner test 14 Nov 2026: tests pass, place from calendar and picker work. DONE. Follow-up S4b (Opus, same day): Liquid Glass drag picker (press to swell, slide, spring) and a kit line on the card so the place change is visible ("Bring 6, incl. kunci motor and STNK" vs "Bring 4"). Not compiled yet.
 **Also in S4 (owner request 14 Nov 2026):** countdown on Upcoming per DESIGN.md (frame 14): pill on the card, countdown as the first line of each row above the title, three tiers, neutral place chips, calendar-day counting, section "Coming up". Pure helper `Countdown.label(from:to:calendar:)` in RunPrepCore with tests (today, tomorrow, 2, 3, 4, 13, 16 days; late-evening and just-after-midnight edges).
 **Acceptance criteria:**
 - [ ] UI / Home actions on H-24 and H-12 (not for races) save the place
