@@ -4,8 +4,8 @@ import SwiftUI
 /// opened from the toolbar and in the "calendar not found" state.
 struct CalendarPickerList: View {
     let options: [CalendarOption]
-    let selectedId: String?
-    let onChoose: (String) -> Void
+    let selection: Set<String>
+    let onToggle: (String) -> Void
     var footer: String?
 
     @State private var query = ""
@@ -46,8 +46,9 @@ struct CalendarPickerList: View {
     }
 
     private func row(_ option: CalendarOption) -> some View {
-        Button {
-            onChoose(option.id)
+        let isSelected = selection.contains(option.id)
+        return Button {
+            onToggle(option.id)
         } label: {
             HStack(spacing: 12) {
                 Circle()
@@ -57,7 +58,7 @@ struct CalendarPickerList: View {
                 Text(option.title)
                     .foregroundStyle(.primary)
                 Spacer()
-                if option.id == selectedId {
+                if isSelected {
                     Image(systemName: "checkmark")
                         .font(.body.weight(.semibold))
                         .foregroundStyle(Color.accentColor)
@@ -66,25 +67,27 @@ struct CalendarPickerList: View {
             .frame(minHeight: 44)
             .contentShape(Rectangle())
         }
+        .buttonStyle(.plain)
         .accessibilityLabel("\(option.title), \(option.account)")
-        .accessibilityAddTraits(option.id == selectedId ? .isSelected : [])
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
 
-/// Sheet version with a title and a Done button.
+/// Multi-select sheet. Taps toggle ticks and keep the sheet open; the last tick stays.
 struct CalendarPickerSheet: View {
     let options: [CalendarOption]
-    let selectedId: String?
-    let onChoose: (String) -> Void
+    @Binding var selection: Set<String>
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
-            CalendarPickerList(options: options, selectedId: selectedId) { id in
-                onChoose(id)
-                dismiss()
-            }
-            .navigationTitle("Training calendar")
+            CalendarPickerList(
+                options: options,
+                selection: selection,
+                onToggle: toggle,
+                footer: "Keep at least one calendar."
+            )
+            .navigationTitle("Training calendars")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -93,5 +96,13 @@ struct CalendarPickerSheet: View {
             }
         }
         .presentationDetents([.medium, .large])
+    }
+
+    private func toggle(_ id: String) {
+        if selection.contains(id) {
+            if selection.count > 1 { selection.remove(id) }
+        } else {
+            selection.insert(id)
+        }
     }
 }

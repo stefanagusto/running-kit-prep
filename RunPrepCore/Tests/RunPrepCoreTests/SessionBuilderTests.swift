@@ -54,6 +54,23 @@ final class SessionBuilderTests: XCTestCase {
         XCTAssertEqual(sessions.first?.place, .home)
     }
 
+    func testCalendarTitleCopied() {
+        let e = CalendarEvent(id: "a", title: "Easy Run", start: now.addingTimeInterval(day), calendarTitle: "Training")
+        XCTAssertEqual(SessionBuilder.sessions(from: [e], now: now).first?.calendarTitle, "Training")
+    }
+
+    func testDuplicateKeysKeepFirst() {
+        let start = now.addingTimeInterval(day)
+        let events = [
+            CalendarEvent(id: "a", title: "Easy Run", start: start, calendarTitle: "First"),
+            CalendarEvent(id: "a", title: "Easy Run", start: start, calendarTitle: "Second"),
+            CalendarEvent(id: "b", title: "Easy Run", start: start, calendarTitle: "Second")
+        ]
+        let sessions = SessionBuilder.sessions(from: events, now: now)
+        XCTAssertEqual(sessions.count, 2)
+        XCTAssertEqual(sessions.first { $0.key.hasPrefix("a|") }?.calendarTitle, "First")
+    }
+
     func testCustomRulesPassThrough() {
         let rules = KeywordRules(longRunPrefixes: ["Big One"], raceKeywords: ["Marathon"], runKeywords: ["Jog"])
         let events = [event("a", "Big One 30k", day), event("b", "Easy Run", day), event("c", "Jog", 2 * day)]

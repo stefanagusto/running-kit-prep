@@ -8,12 +8,22 @@ public struct Session: Equatable, Sendable {
     public var start: Date
     /// Always nil for races.
     public var place: Place?
+    /// Name of the calendar the session came from.
+    public var calendarTitle: String
 
-    public init(key: String, title: String, type: SessionType, start: Date, place: Place? = nil) {
+    public init(
+        key: String,
+        title: String,
+        type: SessionType,
+        start: Date,
+        place: Place? = nil,
+        calendarTitle: String = ""
+    ) {
         self.key = key
         self.title = title
         self.type = type
         self.start = start
         self.place = place
+        self.calendarTitle = calendarTitle
     }
 }

@@ -32,15 +32,22 @@ final class CalendarService {
         }
     }
 
-    func events(calendarId: String, from start: Date, days: Int) -> [CalendarEvent] {
-        guard let calendar = store.calendar(withIdentifier: calendarId),
+    /// Events from every given calendar in [start, start + days). Unknown ids are ignored.
+    func events(calendarIds: [String], from start: Date, days: Int) -> [CalendarEvent] {
+        let calendars = calendarIds.compactMap { store.calendar(withIdentifier: $0) }
+        guard !calendars.isEmpty,
               let end = Calendar.current.date(byAdding: .day, value: days, to: start) else { return [] }
-        let predicate = store.predicateForEvents(withStart: start, end: end, calendars: [calendar])
+        let predicate = store.predicateForEvents(withStart: start, end: end, calendars: calendars)
         return store.events(matching: predicate).map { event in
             let id = event.calendarItemIdentifier.isEmpty
                 ? (event.eventIdentifier ?? "")
                 : event.calendarItemIdentifier
-            return CalendarEvent(id: id, title: event.title ?? "", start: event.startDate)
+            return CalendarEvent(
+                id: id,
+                title: event.title ?? "",
+                start: event.startDate,
+                calendarTitle: event.calendar?.title ?? ""
+            )
         }
     }
 

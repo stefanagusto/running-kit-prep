@@ -1,6 +1,6 @@
 # Running Prep App - status
 
-Last updated: 14 Nov 2026. Status: **S0 done 14 Nov 2026 (free Apple ID can do everything except Time Sensitive). S1 done 14 Nov (tests pass, app runs on the iPhone). Next: S2, the Upcoming screen from the real calendar.**
+Last updated: 14 Nov 2026. Status: **S0, S1, S2 done. S3 (reminders, multiple calendars, test-only light/dark switch) written 14 Nov; waiting for the Mac and iPhone run.**
 
 This file is the progress hub. Details live in:
 
@@ -21,15 +21,15 @@ This file is the progress hub. Details live in:
 | 1 | Needs, item rules, option research (A-E) | done 14 Nov |
 | 2 | Option E chosen: native SwiftUI app | done 14 Nov |
 | 3 | Plan redone docs-first (`tasks/plan.md`, `tasks/todo.md`) | done 14 Nov |
-| 4 | D1 PRD | drafted 14 Nov (Sonnet), reviewed by Opus; Liquid Glass + ecosystem update in progress |
-| 5 | D2 TDD | drafted 14 Nov (Sonnet), reviewed by Opus; Liquid Glass + ecosystem update in progress |
+| 4 | D1 PRD | drafted 14 Nov (Sonnet), reviewed by Opus; Liquid Glass + ecosystem update done 14 Nov |
+| 5 | D2 TDD | drafted 14 Nov (Sonnet), reviewed by Opus; Liquid Glass + ecosystem update done 14 Nov |
 | 6 | D3 Design system (Liquid Glass, Start Line tokens) | done 14 Nov (Opus, pen.dev) |
 | 7 | D4 Screens + ecosystem surfaces | done 14 Nov (Opus, pen.dev) |
 | 8 | Checkpoint 0: my review of PRD, TDD, design | approved 14 Nov |
 | 9 | Phase 1: S0 free-team signing spike | done 14 Nov: all pass except Time Sensitive |
 | 9b | Phase 1: S1 skeleton + core | done 14 Nov: tests pass, app runs on iPhone |
-| 9c | Phase 1: S2 Upcoming | code written 14 Nov, **waiting for Mac test run** |
-| 10 | Phase 2: reminders, place, checklist, Siri intents | not started |
+| 9c | Phase 1: S2 Upcoming | done 14 Nov: real sessions on the iPhone |
+| 10 | Phase 2: S3 reminders written 14 Nov (waiting for Mac run); S4 place, S5 checklist, S9 Siri not started |
 | 11 | Phase 3: items, settings, nightly refresh | not started |
 | 12 | Phase 4 (P2): Live Activity, widgets, Control Center control | not started |
 

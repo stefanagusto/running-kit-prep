@@ -241,7 +241,7 @@ A `Session` whose type is `.race` is built with `place = nil` regardless of stor
 | | `checkedItemIds` | `[String]` | tick keys `"<itemId>:<group>"` (see section 12) |
 | | `completedAt` | `Date?` | set when all boxes ticked |
 | | `startDate` | `Date` | for cleanup of old records |
-| `AppSettings` | `calendarId` | `String?` | EKCalendar identifier |
+| `AppSettings` | `calendarId` | `String?` | EKCalendar identifier (S2). From S3: `calendarIds: [String]`, several calendars merged, migrated from `calendarId` |
 | | `longRunPrefixes` | `[String]` | default `["Long Run"]` |
 | | `raceKeywords` | `[String]` | default `["Race","RunFest"]` |
 | | `runKeywords` | `[String]` | default `["Run","Fartlek","Interval","Tempo"]` |

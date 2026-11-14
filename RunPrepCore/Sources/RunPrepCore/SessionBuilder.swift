@@ -2,6 +2,7 @@ import Foundation
 
 public enum SessionBuilder {
     /// Turns calendar events in [now, now + windowDays) into sessions, sorted by start.
+    /// Events from several calendars can repeat the same key; the first one wins.
     public static func sessions(
         from events: [CalendarEvent],
         rules: KeywordRules = .default,
@@ -11,11 +12,20 @@ public enum SessionBuilder {
     ) -> [Session] {
         let end = now.addingTimeInterval(TimeInterval(windowDays) * 86_400)
         var result: [Session] = []
+        var seen: Set<String> = []
         for event in events where event.start >= now && event.start < end {
             guard let type = TitleClassifier.classify(title: event.title, rules: rules) else { continue }
             let sessionKey = Self.key(id: event.id, start: event.start)
+            guard seen.insert(sessionKey).inserted else { continue }
             let place: Place? = type == .race ? nil : places[sessionKey]
-            result.append(Session(key: sessionKey, title: event.title, type: type, start: event.start, place: place))
+            result.append(Session(
+                key: sessionKey,
+                title: event.title,
+                type: type,
+                start: event.start,
+                place: place,
+                calendarTitle: event.calendarTitle
+            ))
         }
         return result.sorted { $0.start < $1.start }
     }

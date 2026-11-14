@@ -3,7 +3,7 @@ import SwiftUI
 
 struct NextSessionCard: View {
     let session: Session
-    let calendarName: String
+    let slots: [ReminderSlot]
 
     private static let lightText = Color(red: 0xE3 / 255, green: 0xE8 / 255, blue: 0xFF / 255)
 
@@ -14,22 +14,15 @@ struct NextSessionCard: View {
         return session.start.formatted(.dateTime.weekday(.wide))
     }
 
+    private var metaText: String {
+        let date = session.start.formatted(.dateTime.day().month(.wide))
+        return session.calendarTitle.isEmpty ? date : "\(date) \u{00B7} \(session.calendarTitle)"
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Next \u{00B7} \(dayWord)")
-                .font(.footnote.weight(.semibold))
-                .foregroundStyle(Self.lightText)
-            Text(session.timeText)
-                .font(.system(size: 56, weight: .bold))
-                .monospacedDigit()
-                .dynamicTypeSize(...DynamicTypeSize.accessibility2)
-            lanes
-            Text(session.title)
-                .font(.title3.weight(.semibold))
-            Text("\(session.start.formatted(.dateTime.day().month(.wide))) \u{00B7} \(calendarName)")
-                .font(.subheadline)
-                .foregroundStyle(Self.lightText)
-            chips
+            summary
+            ReminderTimeline(slots: slots)
         }
         .foregroundStyle(.white)
         .padding(20)
@@ -46,6 +39,25 @@ struct NextSessionCard: View {
             ),
             in: RoundedRectangle(cornerRadius: 26, style: .continuous)
         )
+    }
+
+    private var summary: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Next \u{00B7} \(dayWord)")
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(Self.lightText)
+            Text(session.timeText)
+                .font(.system(size: 56, weight: .bold))
+                .monospacedDigit()
+                .dynamicTypeSize(...DynamicTypeSize.accessibility2)
+            lanes
+            Text(session.title)
+                .font(.title3.weight(.semibold))
+            Text(metaText)
+                .font(.subheadline)
+                .foregroundStyle(Self.lightText)
+            chips
+        }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Next session. \(dayWord). \(session.accessibilityText)")
     }

@@ -279,7 +279,7 @@ The app clears and reschedules all reminders when:
 
 | Area | What I can do |
 |---|---|
-| Calendar | Pick the calendar (default "Stefan's' Training"). See permission status. Refresh now. |
+| Calendar | Pick one or more calendars (default "Stefan's' Training"); sessions from all picked calendars are merged. See permission status. Refresh now. Multi-select added in S3 (owner request 14 Nov 2026). |
 | Keywords | Edit keyword lists for long run, race and normal run. |
 | Offsets | Edit H-24, H-12 and leave offsets. Defaults: 24 h, 12 h, 30 min. |
 | Items | Add, edit, delete and reorder items. Per item: name, types (normal, long run, race), only if at UI, group. |

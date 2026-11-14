@@ -79,7 +79,7 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 **Scope:** M | Model: Sonnet
 
 ## Task S2: See my upcoming runs
-**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus (fixed a compile error in SessionBuilder and a Substring type mismatch in a test). 7 new SessionBuilder tests. First iPhone run (owner): tests pass, calendar access and sessions work. Fixes after that run: minutes shown as "06.0" (now two digits), calendar drop-down replaced by a sheet grouped by account with colour dot, tick and search, chips no longer wrap. Waiting for the re-test.
+**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus (fixed a compile error in SessionBuilder and a Substring type mismatch in a test). 7 new SessionBuilder tests. First iPhone run (owner): tests pass, calendar access and sessions work. Fixes after that run: minutes shown as "06.0" (now two digits), calendar drop-down replaced by a sheet grouped by account with colour dot, tick and search, chips no longer wrap. Re-test passed (owner, 14 Nov): DONE.
 **Acceptance criteria:**
 - [ ] Calendar permission flow incl. denied state
 - [ ] Calendar picker defaults to "Stefan's' Training" if present
@@ -94,10 +94,13 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 ## Phase 2: Reminders
 
 ## Task S3: Get reminders
+**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus. 17 new tests (15 planner, 2 session builder). Includes multiple calendars, calendar-name polish and a DEBUG-only light/dark switch (owner request; remove before release). Review fixes: H-24 asks "Where do you start? Choose in Run Prep." until S4 adds buttons; card timeline says "passed" (not "sent") for past times. Not compiled yet: waiting for `swift test` and the iPhone test script.
 **Acceptance criteria:**
 - [ ] Planner tests: 05:00 long run times, late-added session, moved event, 3 weeks of sessions, cap 60
 - [ ] H-24, H-12, leave reminders scheduled with the right text
 - [ ] Rebuild on app open and calendar change; stale reminders removed
+- [ ] Multiple calendars (owner request 14 Nov 2026): the Training calendar sheet allows ticking several calendars; Upcoming and reminders merge sessions from all ticked calendars (sorted by start, de-duplicated by session key); at least one must stay ticked; existing single choice migrates to a one-item list
+- [ ] Polish from the S2 run: calendar names in the sheet use primary text colour (not tint blue)
 **Dependencies:** S2 | **Scope:** M | Model: Sonnet
 
 ## Task S4: Choose the place
