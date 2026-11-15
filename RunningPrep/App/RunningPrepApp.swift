@@ -14,7 +14,7 @@ struct RunningPrepApp: App {
 
     var body: some Scene {
         WindowGroup {
-            UpcomingView(sync: env.sync, router: env.router)
+            RootView(sync: env.sync, router: env.router)
                 .tint(Color.accentColor)
                 .debugAppearance()
         }

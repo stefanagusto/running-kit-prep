@@ -16,7 +16,7 @@ struct ChecklistView: View {
         _records = Query(filter: #Predicate<SessionStateRecord> { $0.sessionKey == key })
     }
 
-    private var kit: Kit { KitBuilder.kit(for: session.type, place: session.place, items: SeedItems.all) }
+    private var kit: Kit { KitBuilder.kit(for: session.type, place: session.place, items: sync.items) }
     private var ticked: Set<String> { Set(records.first?.checkedItemIds ?? []) }
     private var counts: (done: Int, total: Int) { Checklist.progress(kit: kit, ticked: ticked) }
     private var complete: Bool { Checklist.isComplete(kit: kit, ticked: ticked) }
@@ -45,7 +45,7 @@ struct ChecklistView: View {
             ChecklistSubline(session: session, setPlace: setPlace)
                 .clearRow()
             if session.placeIsMissing {
-                PlacePrompt(session: session, select: setPlace)
+                PlacePrompt(session: session, items: sync.items, select: setPlace)
                     .padding(16)
                     .foregroundStyle(.white)
                     .background(PlacePicker.cobalt, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
@@ -92,7 +92,7 @@ struct ChecklistView: View {
     }
 
     private func entry(_ item: KitItem) -> ChecklistEntry {
-        let rule = SeedItems.all.first { $0.id == item.id }
+        let rule = sync.items.first { $0.id == item.id }
         return ChecklistEntry(
             item: item,
             uiOnly: rule?.uiOnly == true,

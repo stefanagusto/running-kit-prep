@@ -12,7 +12,7 @@ final class AppEnvironment {
 
     private init() {
         do {
-            container = try ModelContainer(for: AppSettings.self, SessionStateRecord.self)
+            container = try ModelContainer(for: AppSettings.self, SessionStateRecord.self, ItemRecord.self)
         } catch {
             fatalError("Could not open the store: \(error)")
         }

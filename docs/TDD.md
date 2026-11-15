@@ -272,7 +272,7 @@ A `Session` whose type is `.race` is built with `place = nil` regardless of stor
 | Socks and shoes | no | no | y | no | P |
 | Bib + magnets | no | no | y | no | P |
 
-Seeding: on first launch (`seedVersion == 0`) insert these 14 rows with `sortOrder` 0...13 and set `seedVersion = 1`. After that the database is the source of truth. Changing the seed later needs a new `seedVersion` and an explicit migration; it must never overwrite user edits.
+Seeding: on first launch (`seedVersion == 0`) insert these 14 rows with `sortOrder` 0...13 and set `seedVersion = 1`. After that the database is the source of truth. Changing the seed later needs a new `seedVersion` and an explicit migration; it must never overwrite user edits. Item ids are kept on edit, so saved ticks (`"<itemId>:<group>"`) stay valid. Items are shown grouped (an item in two groups shows in both sections); reordering inside a section swaps the moved items into the sortOrder slots that section already used, so other items keep their places. **[Decision 15 Nov 2026]**
 
 ## 5. Title classifier
 
@@ -617,7 +617,7 @@ Names only. Visual design is in `docs/DESIGN.md`.
 
 Visual rules for every screen are in section 16.
 
-Navigation: root `TabView` (Upcoming, Items, Settings), with Onboarding as a full-screen cover until both permissions are decided. Checklist and Session detail are pushed from Upcoming or from the deep link.
+Navigation: root `TabView` (Upcoming, Items, Settings) (S6 ships Upcoming and Items; Settings joins in S7), with Onboarding as a full-screen cover until both permissions are decided. Checklist and Session detail are pushed from Upcoming or from the deep link.
 
 Checklist rules: `completedAt` is set when every `KitItem` is ticked and cleared when an item is unticked. A kit item shown under two groups (watch in Charge and Bring) has one tick per group row, keyed by `"<itemId>:<group>"`. **[Decision]** (the sources do not say; tick per row matches "Charge the day before, grab on the way out".) `checkedItemIds` stores those keys.
 

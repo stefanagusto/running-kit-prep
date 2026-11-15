@@ -46,6 +46,15 @@ final class ReminderPlannerTests: XCTestCase {
         )
     }
 
+    func testH12WordFollowsTheFireHour() {
+        // 16:00 Saturday start: H-12 fires 04:00, so it reads "Pack now".
+        let sat16 = sat5.addingTimeInterval(11 * 3_600)
+        let result = plan([session("b", start: sat16)])
+        XCTAssertEqual(result[1].title, "Pack now: Long Run 18 km, 16:00")
+        XCTAssertEqual(ReminderPlanner.packWord(fireDate: sat16.addingTimeInterval(-43_200), calendar: calendar), "Pack now")
+        XCTAssertEqual(ReminderPlanner.packWord(fireDate: sat5.addingTimeInterval(-43_200), calendar: calendar), "Pack tonight")
+    }
+
     func testLongRunTimesTitlesAndBodies() {
         let result = plan([session("a")])
         XCTAssertEqual(result.map(\.kind), [.h24, .h12, .leave])

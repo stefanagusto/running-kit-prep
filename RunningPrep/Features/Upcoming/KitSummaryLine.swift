@@ -3,10 +3,10 @@ import SwiftUI
 
 /// One line under the place picker that shows what the place changes:
 /// "Pack 4 · Bring 6, incl. kunci motor and STNK" for UI campus, "Pack 4 · Bring 4" for Home.
-/// Uses the seed items until items become editable (S6).
+/// Built from the user's items.
 struct KitSummaryLine: View {
     let session: Session
-    var items: [ItemRule] = SeedItems.all
+    let items: [ItemRule]
 
     private static let lightText = Color(red: 0xE3 / 255, green: 0xE8 / 255, blue: 0xFF / 255)
 

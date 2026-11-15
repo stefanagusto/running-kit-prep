@@ -84,7 +84,7 @@ As a runner, I want a reminder 24 hours before start, so that I charge the watch
 ### US-04 Pack tonight reminder (H-12)
 As a runner, I want a second reminder 12 hours before start, so that I pack before bed.
 
-- Given a session, when it is 12 hours before start, then I get a "pack tonight" notification.
+- Given a session, when it is 12 hours before start, then I get a "Pack tonight" notification ("Pack now" when it fires before 17:00).
 - Given the place is not set (and it is not a race), then the notification asks for the place again with the same two buttons.
 - Given the place is already set, then there are no place buttons.
 
@@ -244,7 +244,7 @@ Three reminders per session. Times are relative to the session start.
 | Reminder | Trigger time | Title | Body example | Actions | Skipped when |
 |---|---|---|---|---|---|
 | H-24 | Start minus 24 h (editable) | "Tomorrow 05:00 Long Run 18 km" | "Charge watch + AirPods. Pack: gel, electrolyte, cap, banana." | "Start at UI", "Start at home" (not for races) | Trigger time is already past. Session type is skipped. |
-| H-12 | Start minus 12 h (editable) | "Pack tonight" | "Long Run 18 km, 05:00. Pack: gel, electrolyte, cap, banana." | "Start at UI", "Start at home" only if the place is unset (not for races) | Trigger time is already past. Session type is skipped. Normal run with the place already set (nothing to pack). |
+| H-12 | Start minus 12 h (editable) | "Pack tonight" when it fires from 17:00 to 23:59, else "Pack now" (15 Nov 2026: an afternoon run fires H-12 around 04:00) | "Long Run 18 km, 05:00. Pack: gel, electrolyte, cap, banana." | "Start at UI", "Start at home" only if the place is unset (not for races) | Trigger time is already past. Session type is skipped. Normal run with the place already set (nothing to pack). |
 | Leave | Start minus 30 min (editable) | "Time to go" | "Check your kit." | Tap, or the "Open kit check" button (added 14 Nov 2026), opens the checklist | Trigger time is already past. Checklist is already "All set". |
 
 Rules:

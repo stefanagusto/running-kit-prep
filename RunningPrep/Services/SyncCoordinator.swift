@@ -14,6 +14,8 @@ final class SyncCoordinator {
     private(set) var calendarOptions: [CalendarOption] = []
     private(set) var selectedCalendarIds: Set<String> = []
     private(set) var lastSyncDate: Date?
+    /// The user's items, sorted by sortOrder. Reloaded at the start of every rebuild.
+    private(set) var items: [ItemRule] = []
 
     @ObservationIgnored private let calendar = CalendarService()
     @ObservationIgnored private let notifications = NotificationService()
@@ -42,7 +44,35 @@ final class SyncCoordinator {
                 for await _ in stream { self?.calendarChanged() }
             }
         }
+        reloadItems()
         await rebuildNow()
+    }
+
+    /// Seeds on first launch, then reads the items from the store.
+    private func reloadItems() {
+        seedItemsIfNeeded(in: context)
+        items = fetchItems(in: context)
+    }
+
+    /// Insert or update by id (trigger 6: rebuild at once, no debounce).
+    func saveItem(_ rule: ItemRule) {
+        upsertItem(rule, in: context)
+        reloadItems()
+        requestRebuild()
+    }
+
+    func deleteItem(id: UUID) {
+        removeItem(id: id, in: context)
+        reloadItems()
+        requestRebuild()
+    }
+
+    /// Reorders one section; other items keep their sortOrder (TDD 4.3).
+    func moveItems(in group: ItemGroup, from source: IndexSet, to destination: Int) {
+        let moved = ItemOrdering.move(items: items, in: group, from: source, to: destination)
+        storeSortOrders(moved, in: context)
+        reloadItems()
+        requestRebuild()
     }
 
     func requestRebuild() {
@@ -93,7 +123,7 @@ final class SyncCoordinator {
     }
 
     private func refreshCompletion(session: Session, place: Place) {
-        let kit = KitBuilder.kit(for: session.type, place: place, items: SeedItems.all)
+        let kit = KitBuilder.kit(for: session.type, place: place, items: items)
         let complete = Checklist.isComplete(kit: kit, ticked: ticks(for: session.key, in: context))
         setCompleted(complete, for: session.key, in: context)
     }
@@ -127,6 +157,7 @@ final class SyncCoordinator {
     }
 
     private func rebuild() async {
+        reloadItems()
         notificationStatus = await notifications.authorizationStatus()
         switch calendar.access {
         case .notDetermined:
@@ -161,7 +192,7 @@ final class SyncCoordinator {
         )
         let states = completedStates(in: context)
         plan = ReminderPlanner.plan(
-            sessions: sessions, states: states, items: SeedItems.all, config: config, now: now, reinstallDate: nil
+            sessions: sessions, states: states, items: items, config: config, now: now, reinstallDate: nil
         )
         state = sessions.isEmpty ? .empty : .sessions(sessions)
         if notificationStatus == .notDetermined, !sessions.isEmpty {

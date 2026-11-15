@@ -115,19 +115,20 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 **Dependencies:** S3 | **Scope:** M (place from location + countdown added) | Model: Sonnet
 
 ## Task S5: Tick off my kit
-**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus (moved a helper out so SyncCoordinator stays near 200 lines). 7 new checklist tests. Also in this round: slower place-picker glide (owner request: about 0.55 s spring, lens stays swollen while moving, labels fade across). Owner run 14 Nov 2026: Kit check opens from the card, ticks are saved, place change drops kunci motor and STNK (8 to 6). Fixes after the run: lanes fill from the left, scroll-edge fade under the floating bars (glass showed row text through). Re-run 14 Nov 2026: lanes fill from the left, fade under the bar works, ALL SET with volt lanes, success haptic and Done button confirmed. Still to confirm with test events: leave-reminder tap opens the checklist.
+**Status 14 Nov 2026:** code written (Sonnet), reviewed by Opus (moved a helper out so SyncCoordinator stays near 200 lines). 7 new checklist tests. Also in this round: slower place-picker glide (owner request: about 0.55 s spring, lens stays swollen while moving, labels fade across). Owner run 14 Nov 2026: Kit check opens from the card, ticks are saved, place change drops kunci motor and STNK (8 to 6). Fixes after the run: lanes fill from the left, scroll-edge fade under the floating bars (glass showed row text through). Re-run 14 Nov 2026: lanes fill from the left, fade under the bar works, ALL SET with volt lanes, success haptic and Done button confirmed. Test events 15 Nov 2026: leave reminder, H-12 place question and race Pack list arrive correctly; after the crash fix (completion-handler delegate on the main thread), tapping the leave reminder opens that session's Kit check. **DONE 15 Nov 2026.**
 **Acceptance criteria:**
-- [ ] Leave reminder tap opens that session's Checklist
-- [ ] Place question first when unset; ticks saved per session
-- [ ] All ticked shows "All set" and removes the leave reminder
+- [x] Leave reminder tap opens that session's Checklist
+- [x] Place question first when unset; ticks saved per session
+- [x] All ticked shows "All set" and removes the leave reminder
 **Dependencies:** S4 | **Scope:** M | Model: Sonnet
 
 ## Checkpoint 2 (Mac + iPhone)
-- [ ] Fake events give the right reminders and lists
+- [x] Fake events give the right reminders and lists (15 Nov 2026)
 
 ## Phase 3: Control
 
 ## Task S6: Edit my items
+**Status 15 Nov 2026:** code written (Sonnet), reviewed by Opus (swipe delete no longer removes the row before the confirmation). New: ItemRecord + one-time seed, Items tab (Charge / Pack / Bring sections, swipe delete with confirmation, Edit to reorder), Item edit, rebuild on every change, ItemOrdering + ItemSummary tests. Also the H-12 title rule "Pack tonight" / "Pack now". Waiting for the Mac build and iPhone run.
 **Acceptance criteria:**
 - [ ] Add, edit, delete, reorder items
 - [ ] Per item: session types, UI-only flag, group

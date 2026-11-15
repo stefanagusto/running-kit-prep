@@ -149,6 +149,7 @@ struct PlacePicker: View {
 /// calendar chose, where that came from.
 struct PlacePrompt: View {
     let session: Session
+    let items: [ItemRule]
     let select: (Place) -> Void
 
     private static let lightText = Color(red: 0xE3 / 255, green: 0xE8 / 255, blue: 0xFF / 255)
@@ -158,7 +159,7 @@ struct PlacePrompt: View {
             Text("Where do you start?")
                 .font(.headline.weight(.bold))
             PlacePicker(selection: session.place, select: select)
-            KitSummaryLine(session: session)
+            KitSummaryLine(session: session, items: items)
             if session.placeSource == .calendar {
                 Text(sourceText)
                     .font(.footnote)

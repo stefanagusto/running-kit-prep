@@ -18,7 +18,7 @@ struct ReminderTimeline: View {
     }
 
     private func row(_ slot: ReminderSlot) -> some View {
-        let info = Self.info(slot.kind)
+        let info = Self.info(slot)
         let text = Self.timeText(slot.fireDate) + (slot.fireDate <= now ? " \u{00B7} passed" : "")
         return HStack(spacing: 10) {
             Image(systemName: info.symbol)
@@ -38,10 +38,11 @@ struct ReminderTimeline: View {
         .accessibilityLabel("\(info.label), \(text)")
     }
 
-    private static func info(_ kind: ReminderKind) -> (symbol: String, label: String) {
-        switch kind {
+    private static func info(_ slot: ReminderSlot) -> (symbol: String, label: String) {
+        switch slot.kind {
         case .h24: return ("battery.100percent.bolt", "Charge + pack")
-        case .h12: return ("backpack", "Pack tonight")
+        case .h12:
+            return ("backpack", ReminderPlanner.packWord(fireDate: slot.fireDate, calendar: .current))
         default: return ("figure.run", "Leave + checklist")
         }
     }

@@ -13,6 +13,8 @@ final class AppSettings {
     /// Declaration-level defaults let SwiftData migrate old stores without a custom plan.
     var uiKeywords: [String] = PlaceRules.default.uiKeywords
     var homeKeywords: [String] = PlaceRules.default.homeKeywords
+    /// 0 until the starter items are inserted (TDD 4.3).
+    var seedVersion: Int = 0
 
     init() {
         let rules = KeywordRules.default

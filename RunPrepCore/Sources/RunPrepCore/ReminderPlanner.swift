@@ -41,6 +41,11 @@ public enum ReminderPlanner {
         return out
     }
 
+    /// "Pack tonight" when the H-12 reminder fires from 17:00 to 23:59, else "Pack now".
+    public static func packWord(fireDate: Date, calendar: Calendar) -> String {
+        (17...23).contains(calendar.component(.hour, from: fireDate)) ? "Pack tonight" : "Pack now"
+    }
+
     private static func fire(_ session: Session, _ minutes: Int) -> Date {
         session.start.addingTimeInterval(-TimeInterval(minutes) * 60)
     }
@@ -64,7 +69,7 @@ public enum ReminderPlanner {
             if asksPlace { clauses.append("Where do you start? Choose in Run Prep.") }
             category = session.type == .race ? .h24Race : .h24
         case .h12:
-            title = "Pack tonight: \(session.title), \(time)"
+            title = "\(packWord(fireDate: slot.fireDate, calendar: calendar)): \(session.title), \(time)"
             clauses = [clause("Pack", kit, [.pack])]
             if asksPlace { clauses.append("Where do you start? Choose in Run Prep.") }
             category = asksPlace ? .h12Ask : .h12

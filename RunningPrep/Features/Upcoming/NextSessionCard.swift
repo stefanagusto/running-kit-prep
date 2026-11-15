@@ -4,6 +4,7 @@ import SwiftUI
 struct NextSessionCard: View {
     let session: Session
     let slots: [ReminderSlot]
+    let items: [ItemRule]
     let onPlace: (Place) -> Void
     let onOpenChecklist: () -> Void
     var now = Date()
@@ -22,10 +23,10 @@ struct NextSessionCard: View {
         VStack(alignment: .leading, spacing: 8) {
             summary
             if session.type != .race {
-                PlacePrompt(session: session, select: onPlace)
+                PlacePrompt(session: session, items: items, select: onPlace)
             } else {
                 Button(action: onOpenChecklist) {
-                    KitSummaryLine(session: session)
+                    KitSummaryLine(session: session, items: items)
                 }
                 .buttonStyle(.plain)
                 .padding(.top, 4)

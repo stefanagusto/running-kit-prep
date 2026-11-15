@@ -128,6 +128,7 @@ struct UpcomingView: View {
                     NextSessionCard(
                         session: next,
                         slots: sync.slots(for: next),
+                        items: sync.items,
                         onPlace: { place in Task { await sync.setPlace(place, for: next.key) } },
                         onOpenChecklist: { router.path.append(next.key) }
                     )
