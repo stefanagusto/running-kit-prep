@@ -1,6 +1,6 @@
 # Running Prep App - status
 
-Last updated: 15 Nov 2026. Status: **S0 to S5 done. S6 (edit items) written 15 Nov; waiting for the Mac and iPhone run.**
+Last updated: 15 Nov 2026. Status: **S0 to S6 done. Next: S7 settings.**
 
 This file is the progress hub. Details live in:
 
@@ -30,7 +30,7 @@ This file is the progress hub. Details live in:
 | 9b | Phase 1: S1 skeleton + core | done 14 Nov: tests pass, app runs on iPhone |
 | 9c | Phase 1: S2 Upcoming | done 14 Nov: real sessions on the iPhone |
 | 10 | Phase 2: S3 to S5 (reminders, place, Kit check) | done 15 Nov: Checkpoint 2 passed; S9 Siri not started |
-| 11 | Phase 3: items, settings, nightly refresh | not started |
+| 11 | Phase 3: items, settings, nightly refresh | S6 items done 15 Nov; S7, S8 not started |
 | 12 | Phase 4 (P2): Live Activity, widgets, Control Center control | not started |
 
 ## Key decisions so far

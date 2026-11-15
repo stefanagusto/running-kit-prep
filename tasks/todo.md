@@ -128,11 +128,11 @@ Status 14 Nov 2026: D1-D4 done (PRD, TDD drafted by Sonnet and reviewed by Opus;
 ## Phase 3: Control
 
 ## Task S6: Edit my items
-**Status 15 Nov 2026:** code written (Sonnet), reviewed by Opus (swipe delete no longer removes the row before the confirmation). New: ItemRecord + one-time seed, Items tab (Charge / Pack / Bring sections, swipe delete with confirmation, Edit to reorder), Item edit, rebuild on every change, ItemOrdering + ItemSummary tests. Also the H-12 title rule "Pack tonight" / "Pack now". Waiting for the Mac build and iPhone run.
+**Status 15 Nov 2026:** code written (Sonnet), reviewed by Opus (swipe delete no longer removes the row before the confirmation). New: ItemRecord + one-time seed, Items tab (Charge / Pack / Bring sections, swipe delete with confirmation, Edit to reorder), Item edit, rebuild on every change, ItemOrdering + ItemSummary tests. Also the H-12 title rule "Pack tonight" / "Pack now". Owner run 15 Nov 2026: list, edit, add (Towel), reorder (Banana to top), delete and Kit check all correct. Polish after the run: delete confirmation is an alert (the iOS 26 dialog showed as a popover on the wrong row, no Cancel), "Remind me to" rows no longer blue, tab bar hidden on Edit item. **DONE 15 Nov 2026** (polish to confirm on the next build).
 **Acceptance criteria:**
-- [ ] Add, edit, delete, reorder items
-- [ ] Per item: session types, UI-only flag, group
-- [ ] Changes rebuild reminders
+- [x] Add, edit, delete, reorder items
+- [x] Per item: session types, UI-only flag, group
+- [x] Changes rebuild reminders
 **Dependencies:** S5 | **Scope:** M | Model: Sonnet
 
 ## Task S7: Settings

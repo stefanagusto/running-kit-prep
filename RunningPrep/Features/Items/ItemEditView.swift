@@ -68,6 +68,8 @@ struct ItemEditView: View {
         .navigationTitle(isNew ? "New item" : "Edit item")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        // A focused edit: the floating tab bar covered the last rows.
+        .toolbar(.hidden, for: .tabBar)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button { dismiss() } label: { Label("Cancel", systemImage: "xmark") }
@@ -90,13 +92,15 @@ struct ItemEditView: View {
             if on { draft.groups.remove(group) } else { draft.groups.insert(group) }
         } label: {
             HStack {
-                Text(title).foregroundStyle(.primary)
+                Text(title).foregroundStyle(Color.primary)
                 Spacer()
                 if on { Image(systemName: "checkmark").foregroundStyle(Color.accentColor) }
             }
             .frame(minHeight: 44)
             .contentShape(Rectangle())
         }
+        // Plain style keeps the label black or white like frame 06; a Form tints buttons blue.
+        .buttonStyle(.plain)
         .accessibilityAddTraits(on ? .isSelected : [])
     }
 

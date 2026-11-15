@@ -31,17 +31,19 @@ extension ItemGroup {
 
 extension View {
     /// The delete confirmation shared by the list and the edit screen.
+    /// An alert, not a confirmation dialog: on iOS 26 the dialog becomes a popover
+    /// anchored to the whole list, so it pointed at the wrong row and had no Cancel.
     func deleteItemDialog(_ item: Binding<ItemRule?>, onDelete: @escaping (ItemRule) -> Void) -> some View {
-        confirmationDialog(
+        alert(
             item.wrappedValue.map { "Delete \($0.name)?" } ?? "Delete item?",
             isPresented: Binding(
                 get: { item.wrappedValue != nil },
                 set: { if !$0 { item.wrappedValue = nil } }
             ),
-            titleVisibility: .visible,
             presenting: item.wrappedValue
         ) { rule in
-            Button("Delete item", role: .destructive) { onDelete(rule) }
+            Button("Cancel", role: .cancel) {}
+            Button("Delete", role: .destructive) { onDelete(rule) }
         } message: { _ in
             Text("It disappears from every checklist and reminder.")
         }
